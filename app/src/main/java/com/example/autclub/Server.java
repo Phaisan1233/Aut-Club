@@ -30,7 +30,6 @@ public class Server {
     static final String SERVER_ADDRESS = "https://softwareteamproject.000webhostapp.com/";//https://www.000webhost.com/members/website/titled-swallow/database
 
 
-    //Constructor to instantiate the progressDialog
     public Server(Context context) {
         progressDialog = new ProgressDialog(context);// to instantiate theh progress dialog
         //setting attributes of progressdialog
