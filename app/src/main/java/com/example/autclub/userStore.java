@@ -27,9 +27,9 @@ public class userStore {
         SharedPreferences.Editor ed = userDatabase.edit();// to edit the data in userDatabase
         ed.putString("Name", user.name);
         ed.putString("Username", user.username);
-        if(userDatabase.getBoolean("Username",true)==true){
-            System.out.println("Username already exist");
-        }
+//        if(userDatabase.getBoolean("Username",true)==true){
+//            System.out.println("Username already exist");
+//        }
         ed.putString("Password", user.password);
         ed.putString("email", user.email);
         ed.commit();

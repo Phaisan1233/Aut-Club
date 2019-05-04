@@ -10,18 +10,18 @@ import android.widget.EditText;
 
 
 public class MainPage extends AppCompatActivity {
-Button  logout,club;
-EditText username;
+    Button  logout,club;
+    EditText username;
 
-//to create a localstore
+    //to create a localstore
     userStore store;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-       username = (EditText)findViewById(R.id.username);
+        username = (EditText)findViewById(R.id.username);
         logout=(Button)findViewById(R.id.btnLogOut);
-club =(Button)findViewById(R.id.btnClub);
+        club =(Button)findViewById(R.id.btnClub);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -36,16 +36,16 @@ club =(Button)findViewById(R.id.btnClub);
             }
         });
         store = new userStore(this);
-    club.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        club.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
 
-            Intent intent = new Intent(MainPage.this,ClubPage.class);
-            startActivity(intent);
-        }
-    });
+                Intent intent = new Intent(MainPage.this,ClubPage.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -73,17 +73,17 @@ club =(Button)findViewById(R.id.btnClub);
             return false;
 
         }
-return true;//return true if the user is logged in
+        return true;//return true if the user is logged in
     }
 
     // to display user details
     private void display(){
 
-      user user = store.getLoggedInUser();
-      username.setText(user.name);
-      username.setText(user.username);
-      //username.setText(user.password);
-      username.setText(user.email);
+        user user = store.getLoggedInUser();
+        username.setText(user.name);
+        username.setText(user.username);
+        //username.setText(user.password);
+        username.setText(user.email);
 
 
     }

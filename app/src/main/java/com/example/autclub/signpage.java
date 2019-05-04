@@ -34,18 +34,18 @@ public class signpage extends AppCompatActivity {
 
 
 
-   if(password.equalsIgnoreCase(confirmpassword) && email.contains("@") && email.contains(".com")) {
-        user userdetails = new user(name, username, password, email);
-        signedupuser(userdetails);
-    }
-       else if (!password.equalsIgnoreCase(confirmpassword)) {
-            AlertDialog.Builder alertdialog = new AlertDialog.Builder(signpage.this);
-            alertdialog.setMessage("Password and ConfirmPassword doesn't match ");
-            alertdialog.setPositiveButton("OK", null);//when ok button is pressed then the error message will go away
-            alertdialog.show();
+                if(password.equalsIgnoreCase(confirmpassword) && email.contains("@") && email.contains(".com")) {
+                    user userdetails = new user(name, username, password, email);
+                    signedupuser(userdetails);
+                }
+                else if (!password.equalsIgnoreCase(confirmpassword)) {
+                    AlertDialog.Builder alertdialog = new AlertDialog.Builder(signpage.this);
+                    alertdialog.setMessage("Password and ConfirmPassword doesn't match ");
+                    alertdialog.setPositiveButton("OK", null);//when ok button is pressed then the error message will go away
+                    alertdialog.show();
 
 
-        }
+                }
 //                else
 //                {
 //                    user userdetails = new user(name, username, password, email);
@@ -53,13 +53,13 @@ public class signpage extends AppCompatActivity {
 //
 //
 //                }
-       else if (!email.contains("@") || !email.contains(".com")) {
-            AlertDialog.Builder alertdialog = new AlertDialog.Builder(signpage.this);
-            alertdialog.setMessage("Please enter a valid email address ");
-            alertdialog.setPositiveButton("OK", null);//when ok button is pressed then the error message will go away
-            alertdialog.show();
+                else if (!email.contains("@") || !email.contains(".com")) {
+                    AlertDialog.Builder alertdialog = new AlertDialog.Builder(signpage.this);
+                    alertdialog.setMessage("Please enter a valid email address ");
+                    alertdialog.setPositiveButton("OK", null);//when ok button is pressed then the error message will go away
+                    alertdialog.show();
 
-        }
+                }
 
 
 
@@ -70,7 +70,7 @@ public class signpage extends AppCompatActivity {
 
 
 
-              //  }
+                //  }
 
 
 //        Intent intent = new Intent(signpage.this,login.class);

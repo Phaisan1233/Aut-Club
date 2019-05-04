@@ -10,12 +10,12 @@ import android.widget.TextView;
 import android.content.Intent;
 
 public class login extends AppCompatActivity
-     //   implements View.OnClickListener
+        //   implements View.OnClickListener
 {
     // Assigning the variables
-     EditText UserName;
-  EditText Password;
-  TextView Info,SignUpLink;
+    EditText UserName;
+    EditText Password;
+    TextView SignUpLink;
     Button LogIn,guest;
     userStore store;
 
@@ -26,12 +26,12 @@ public class login extends AppCompatActivity
         // assign variables with respective xml ids
         UserName = (EditText)findViewById(R.id.userName);
         Password =(EditText)findViewById(R.id.Upassword);
-        Info = (TextView)findViewById(R.id.tvInfo);
+       // Info = (TextView)findViewById(R.id.tvInfo);
         SignUpLink=(TextView)findViewById(R.id.tvSignupLink);
         LogIn = (Button)findViewById(R.id.btnRegister);
         guest = (Button)findViewById(R.id.btnguest);
-    // assign a click listener so that something will happen when the button is clicked and we need to implements View.OnClickListener on the whole class
-store =new userStore(this);
+        // assign a click listener so that something will happen when the button is clicked and we need to implements View.OnClickListener on the whole class
+        store =new userStore(this);
 
         LogIn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -62,55 +62,55 @@ store =new userStore(this);
 
     }
 
-private void login() {
+    private void login() {
 
-    String username = UserName.getText().toString();
-    String password = Password.getText().toString();
+        String username = UserName.getText().toString();
+        String password = Password.getText().toString();
 
 
-    user userdetails = new user(username, password);// creating user objective
-    validate(userdetails);
+        user userdetails = new user(username, password);// creating user objective
+        validate(userdetails);
 
 //    store.storedata(userdetails);// to store details of the user that logged in
 //    store.setLoggedInUser(true);
-}
+    }
 
- private void validate(user user){
+    private void validate(user user){
         Server server = new Server(this);
 
-     server.getUserDetailsInServer(user,new getReturnedUser(){
-         @Override
-         public void done(user returneduser) {
+        server.getUserDetailsInServer(user,new getReturnedUser(){
+            @Override
+            public void done(user returneduser) {
 
-             if(returneduser==null){
-
-
-                 message();
+                if(returneduser==null){
 
 
-             }else {
-                 loguserIn(returneduser);
+                    message();
 
-             }
 
-         }
-     });
+                }else {
+                    loguserIn(returneduser);
 
- }
- private void message(){
-     AlertDialog.Builder alertdialog = new AlertDialog.Builder(login.this);
-     alertdialog.setMessage("Invalid Details");
-     alertdialog.setPositiveButton("OK",null);//when ok button is pressed then the error message will go away
-      alertdialog.show();
+                }
 
- }
-private void loguserIn(user returnedUser){
+            }
+        });
+
+    }
+    private void message(){
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(login.this);
+        alertdialog.setMessage("Invalid Details");
+        alertdialog.setPositiveButton("OK",null);//when ok button is pressed then the error message will go away
+        alertdialog.show();
+
+    }
+    private void loguserIn(user returnedUser){
         store.storedata(returnedUser);
         store.setLoggedInUser(true);
         Intent intent = new Intent(login.this,MainPage.class);
         startActivity(intent);
 //  startActivity(new Intent(this, MainActivity.class));
 
-}
+    }
 
 }
