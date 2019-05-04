@@ -26,10 +26,11 @@ public class Server {
     ProgressDialog progressDialog; //is responsible to show the login bar when the server request is being executed
     //creating constants
     static final int CONNECTION_TIME = 1000 * 15;//time in millisecond its basically a timeout
-   // static final String SERVER_ADDRESS = "https://softwareteamproject.000webhostapp.com/";//https://www.000webhost.com/members/website/titled-swallow/database
+    // static final String SERVER_ADDRESS = "https://softwareteamproject.000webhostapp.com/";//https://www.000webhost.com/members/website/titled-swallow/database
     static final String SERVER_ADDRESS = "https://softwareteamproject.000webhostapp.com/";//https://www.000webhost.com/members/website/titled-swallow/database
 
 
+    //Constructor to instantiate the progressDialog
     public Server(Context context) {
         progressDialog = new ProgressDialog(context);// to instantiate theh progress dialog
         //setting attributes of progressdialog
@@ -154,15 +155,15 @@ public class Server {
 //                    u = new user(name, user.username, user.password, email);
 //
 //                }
-                    if(jsonObject.length()!=0){
+                if(jsonObject.length()!=0){
 
 
-                        Log.v("happened","2");
-                        String name = jsonObject.getString("name");
+                    Log.v("happened","2");
+                    String name = jsonObject.getString("name");
                     String email = jsonObject.getString("email");
                     u = new user(name, user.username, user.password, email);
 
-                    }
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
