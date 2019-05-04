@@ -1,15 +1,11 @@
-package com.example.clubs;
+package com.example.autclub;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Event implements Parcelable {
     private String name;
@@ -22,14 +18,14 @@ public class Event implements Parcelable {
 
     }
 
-    public Event(String Name,String descript,String start,String end) throws ParseException {
+    public Event(String Name, String descript, String start, String end) throws ParseException {
         this.setDescription(descript);
         this.setName(Name);
         this.setStartime(start);
         this.setEndtime(end);
     }
 
-    public Event(String Name,String start,String end) throws ParseException {
+    public Event(String Name, String start, String end) throws ParseException {
         this.setDescription("");
         this.setName(Name);
         this.setStartime(start);
