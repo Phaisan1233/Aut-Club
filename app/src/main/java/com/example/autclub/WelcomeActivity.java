@@ -1,13 +1,12 @@
 package com.example.autclub;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity
+public class WelcomeActivity<login> extends AppCompatActivity
         //     implements View.OnClickListener
 {
 
@@ -16,7 +15,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_welcome);
         // UserName = (EditText)findViewById(R.id.UName);
 
 
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 next();
-
             }
 
         });
@@ -33,19 +31,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void next() {
-        Intent intent = new Intent(MainActivity.this, login.class);
+        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-//    @Override
-//    public void onClick(View v) {
-//        switch(v.getId()){
-//            case R.id.btnlogout:
-//
-//                startActivity(new Intent(MainActivity.this,login.class));
-//               // startActivity(new Intent(this,signuppage.class));
-//
-//                break;
-//        }
-//    }
 
 }

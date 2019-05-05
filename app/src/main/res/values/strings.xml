@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">AutClub</string>
+
+    <string name="next">Next</string>
+    <string name="welcome">WELCOME</string>
+
+    <string name="username">UserName</string>
+    <string name="password">Password</string>
+
+    <string name="login">Login</string>
+    <string name="click_here_to_signup">Click here to Signup</string>
+    <string name="guestuser">GuestUser</string>
+    <string name="user_name">User Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">E-mail</string>
+    <string name="register">Register</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="reset_password">Reset Password</string>
 </resources>
