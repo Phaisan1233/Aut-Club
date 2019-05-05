@@ -19,7 +19,7 @@ public class WelcomeActivity<login> extends AppCompatActivity
         // UserName = (EditText)findViewById(R.id.UName);
 
 
-        next = (Button) findViewById(R.id.btnnext);
+        next = findViewById(R.id.btnnext);
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

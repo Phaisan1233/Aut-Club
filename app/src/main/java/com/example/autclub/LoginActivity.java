@@ -34,11 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameEditText = (EditText) findViewById(R.id.login_etUserName);
-        final EditText passwordEditText = (EditText) findViewById(R.id.login_etPassword);
-        final TextView signupTextView = (TextView) findViewById(R.id.login_signup);
-        final Button loginButton = (Button) findViewById(R.id.login_btnLogin);
-        final Button resetPasswordButton = (Button) findViewById(R.id.login_resetButton);
+        final EditText usernameEditText = findViewById(R.id.login_etUserName);
+        final EditText passwordEditText = findViewById(R.id.login_etPassword);
+        final TextView signupTextView = findViewById(R.id.login_signup);
+        final Button loginButton = findViewById(R.id.login_btnLogin);
+        final Button resetPasswordButton = findViewById(R.id.login_resetButton);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
 
 
@@ -84,27 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         loginRequest(username, password, responseListener);
     }
 
-
-    private void loginRequest(final String username, final String password, Response.Listener<String> responseListener) {
-        String loginRequestURL = databaseURL + loginPHP;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) { }}) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("DB_HOST", "localhost");
-                params.put("DB_USER", "id9336220_autclubdb");
-                params.put("DB_PASSWORD", "software");
-                params.put("DB_NAME", "id9336220_autclubdb");
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
     private void eventHandleLoginButtonResponse(String response) {
         try {
             Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
@@ -121,6 +100,28 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private void loginRequest(final String username, final String password, Response.Listener<String> responseListener) {
+        String loginRequestURL = databaseURL + loginPHP;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("DB_HOST", "localhost");
+                params.put("DB_USER", "id9336220_autclubdb");
+                params.put("DB_PASSWORD", "software");
+                params.put("DB_NAME", "id9336220_autclubdb");
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void responseHandleSuccess(JSONObject jsonObject) throws JSONException {

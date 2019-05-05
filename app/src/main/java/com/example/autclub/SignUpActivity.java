@@ -33,13 +33,13 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        final EditText usernameEditText = (EditText) findViewById(R.id.reset_userName);
-        final EditText passwordEditText = (EditText) findViewById(R.id.reset_userPassword);
-        final EditText confirmPasswordEditText = (EditText) findViewById(R.id.reset_confirmpassword);
-        final EditText firstNameEditText = (EditText) findViewById(R.id.signup_firstName);
-        final EditText lastNameEditText = (EditText) findViewById(R.id.signup_lastName);
-        final EditText emailEditText = (EditText) findViewById(R.id.signup_email);
-        final Button registerButton = (Button) findViewById(R.id.signup_btnRegister);
+        final EditText usernameEditText = findViewById(R.id.reset_userName);
+        final EditText passwordEditText = findViewById(R.id.reset_userPassword);
+        final EditText confirmPasswordEditText = findViewById(R.id.reset_confirmpassword);
+        final EditText firstNameEditText = findViewById(R.id.signup_firstName);
+        final EditText lastNameEditText = findViewById(R.id.signup_lastName);
+        final EditText emailEditText = findViewById(R.id.signup_email);
+        final Button registerButton = findViewById(R.id.signup_btnRegister);
         requestQueue = Volley.newRequestQueue(SignUpActivity.this);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -57,12 +57,13 @@ public class SignUpActivity extends AppCompatActivity {
                     message("Please enter a valid email address ", "OK");
                 } else {
                     final User user = new User(username, firstName, lastName, email);
-                    eventHandleRegisterButton( user, password);
+                    eventHandleRegisterButton(user, password);
                 }
             }
         });
     }
-    private void eventHandleRegisterButton(User user,String password){
+
+    private void eventHandleRegisterButton(User user, String password) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -75,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void eventHandleRegisterButtonResponse(String response) {
         try {
             JSONObject jsonResponse = new JSONObject(response);
-            boolean success = false;
+            boolean success;
             success = jsonResponse.getBoolean("success");
             if (success) {
                 responseHandleSuccess(response);
@@ -86,7 +87,8 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void responseHandleSuccess(String response){
+
+    private void responseHandleSuccess(String response) {
         Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
         message("Sign up successful", "OK");
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
@@ -103,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("DB_HOST", "localhost");
                 params.put("DB_USER", "id9336220_autclubdb");
                 params.put("DB_PASSWORD", "software");
@@ -113,11 +115,8 @@ public class SignUpActivity extends AppCompatActivity {
                 params.put("firstName", user.getFirstName());
                 params.put("lastName", user.getLastName());
                 params.put("email", user.getEmail());
-
                 return params;
             }
-
-
         };
         requestQueue.add(stringRequest);
     }

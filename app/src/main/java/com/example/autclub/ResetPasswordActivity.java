@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,10 +32,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resetpassword);
 
-        final EditText etUsername = (EditText) findViewById(R.id.reset_userName);
-        final EditText etPassword = (EditText) findViewById(R.id.reset_userPassword);
-        final EditText etConfirmPass = (EditText) findViewById(R.id.reset_confirmpassword);
-        final Button btnReset = (Button) findViewById(R.id.reset_btnConfirm);
+        final EditText etUsername = findViewById(R.id.reset_userName);
+        final EditText etPassword = findViewById(R.id.reset_userPassword);
+        final EditText etConfirmPass = findViewById(R.id.reset_confirmpassword);
+        final Button btnReset = findViewById(R.id.reset_btnConfirm);
 
         requestQueue = Volley.newRequestQueue(ResetPasswordActivity.this);
 
@@ -49,7 +48,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 if (!password.equalsIgnoreCase(confirmPassword)) {
                     message("Password and ConfirmPassword doesn't match ", "OK");
                 } else {
-                    resetRequest(username, password, eventHandleResetButton() );
+                    eventHandleResetButton(username, password);
                 }
 
 
@@ -57,20 +56,21 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
 
     }
-    private Response.Listener<String> eventHandleResetButton() {
+
+    private void eventHandleResetButton(String username, String password) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 eventHandleResetButtonResponse(response);
             }
         };
-        return responseListener;
+        resetRequest(username, password, responseListener);
     }
 
     private void eventHandleResetButtonResponse(String response) {
         try {
             JSONObject jsonResponse = new JSONObject(response);
-            boolean success = false;
+            boolean success;
             success = jsonResponse.getBoolean("success");
             if (success) {
                 //Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
@@ -83,18 +83,18 @@ public class ResetPasswordActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     private void resetRequest(final String username, final String password, Response.Listener<String> responseListener) {
         String loginRequestURL = databaseURL + SignUpPHP;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) { }
+            public void onErrorResponse(VolleyError error) {
+            }
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("DB_HOST", "localhost");
                 params.put("DB_USER", "id9336220_autclubdb");
                 params.put("DB_PASSWORD", "software");

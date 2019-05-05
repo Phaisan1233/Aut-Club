@@ -17,10 +17,8 @@ public class MainPageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         User user = (User) intent.getExtras().getSerializable("User");
-
         mTextViewResult.append(user.toString());
 
 
-        ;
     }
 }
