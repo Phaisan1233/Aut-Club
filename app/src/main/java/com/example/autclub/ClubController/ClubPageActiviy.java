@@ -53,7 +53,7 @@ public class ClubPageActiviy extends AppCompatActivity {
             String name = "STEM WOMEN";
             clubname.setText(name);
             im.setImageResource(R.drawable.stemwomen);
-           String stemdescription = description.get(3);
+            String stemdescription = description.get(3);
             t.setText(stemdescription);
         }
 

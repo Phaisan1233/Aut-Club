@@ -18,11 +18,11 @@ import java.util.List;
 
 public class ClubListPageActivity extends AppCompatActivity {
 
+    public static ArrayList<String> description;
     private List<String> imagestag = new ArrayList<>();
     private List<Club> imagename = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
     private ClubsListAdapter Clubadapter;
-    public static ArrayList<String> description;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

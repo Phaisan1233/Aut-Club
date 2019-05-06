@@ -15,8 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.autclub.R;
 import com.example.autclub.AppModel.User;
+import com.example.autclub.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,8 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void responseHandleSuccess(String response) {
         Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
         message("Sign up successful", "OK");
-        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-        SignUpActivity.this.startActivity(intent);
+        newActivityPage(LoginActivity.class);
     }
 
     private void signUpRequest(final User user, final String password, Response.Listener<String> responseListener) {
@@ -132,5 +131,10 @@ public class SignUpActivity extends AppCompatActivity {
         alertdialog.setMessage(message);
         alertdialog.setPositiveButton(buttonTxt, null);//when ok button is pressed then the error message will go away
         alertdialog.show();
+    }
+
+    private void newActivityPage(Class nextClass) {
+        Intent intent = new Intent(SignUpActivity.this, nextClass);
+        SignUpActivity.this.startActivity(intent);
     }
 }

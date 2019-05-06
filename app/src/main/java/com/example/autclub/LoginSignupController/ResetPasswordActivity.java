@@ -76,8 +76,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             if (success) {
                 //Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
                 message("Change password successful", "OK");
-                Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
-                ResetPasswordActivity.this.startActivity(intent);
+                newActivityPage(LoginActivity.class);
             } else {
                 message("Change password Failed: \n       Username is not existed", "Retry");
             }
@@ -109,10 +108,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    protected void message(String message, String buttonTxt) {
+    private void message(String message, String buttonTxt) {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(ResetPasswordActivity.this);
         alertdialog.setMessage(message);
         alertdialog.setPositiveButton(buttonTxt, null);//when ok button is pressed then the error message will go away
         alertdialog.show();
+    }
+
+    private void newActivityPage(Class nextClass) {
+        Intent intent = new Intent(ResetPasswordActivity.this, nextClass);
+        ResetPasswordActivity.this.startActivity(intent);
     }
 }

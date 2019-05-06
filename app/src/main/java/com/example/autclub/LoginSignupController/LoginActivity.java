@@ -17,9 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.AppModel.Club;
+import com.example.autclub.AppModel.User;
 import com.example.autclub.InitialController.InstructionPage;
 import com.example.autclub.R;
-import com.example.autclub.AppModel.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +29,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Login activity control the login activity page.
+ */
 public class LoginActivity extends AppCompatActivity {
-    private final String databaseURL = "https://softwareteamproject.000webhostapp.com/";
-    private final String loginPHP = "Login.php";
-    protected RequestQueue requestQueue;
+    private final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //datebase link
+    private final String loginPHP = "Login.php"; //php file
+
+    /**
+     * The Request queue.
+     */
+    protected RequestQueue requestQueue;// request info form database
 
 
     @Override
@@ -40,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //set view variable
         final EditText usernameEditText = findViewById(R.id.login_etUserName);
         final EditText passwordEditText = findViewById(R.id.login_etPassword);
         final TextView signupTextView = findViewById(R.id.login_signup);
@@ -48,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
         final Button guestuserButton = findViewById(R.id.login_btnGuest);
 
+        //Guest Button on click
         guestuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //SignUp Button on click
         signupTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Login Button on click
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Reset Button on click
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,18 +90,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void eventHandleGuestButton() {
-        Intent intent = new Intent(LoginActivity.this, InstructionPage.class);
-        startActivity(intent);
+        newActivityPage(InstructionPage.class);
     }
 
     private void eventHandleSresetPasswordButton() {
-        Intent registerIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
-        LoginActivity.this.startActivity(registerIntent);
+        newActivityPage(ResetPasswordActivity.class);
     }
 
     private void eventHandleSignUpTextView() {
-        Intent registerIntent = new Intent(LoginActivity.this, SignUpActivity.class);
-        LoginActivity.this.startActivity(registerIntent);
+        newActivityPage(SignUpActivity.class);
     }
 
     private void eventHandleLoginButton(String username, String password) {
@@ -164,9 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         user.setFollowClub(clubList);
         Log.d("user", "responseHandleSuccess: " + user.toString());
 
-        Intent intent = new Intent(LoginActivity.this, InstructionPage.class);
-        startActivity(intent);
-        LoginActivity.this.startActivity(intent);
+        newActivityPage(InstructionPage.class);
     }
 
     private void message(String message, String buttonTxt) {
@@ -174,6 +181,11 @@ public class LoginActivity extends AppCompatActivity {
         alertdialog.setMessage(message);
         alertdialog.setPositiveButton(buttonTxt, null);//when ok button is pressed then the error message will go away
         alertdialog.show();
+    }
+
+    private void newActivityPage(Class nextClass) {
+        Intent intent = new Intent(LoginActivity.this, nextClass);
+        LoginActivity.this.startActivity(intent);
     }
 
 }

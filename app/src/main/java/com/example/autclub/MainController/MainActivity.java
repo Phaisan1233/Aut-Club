@@ -23,12 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.autclub.ClubController.ClubListPageActivity;
 import com.example.autclub.AppModel.Event;
-import com.example.autclub.LoginSignupController.LoginActivity;
-import com.example.autclub.InitialController.WelcomeActivity;
-import com.example.autclub.R;
 import com.example.autclub.AppModel.User;
+import com.example.autclub.ClubController.ClubListPageActivity;
+import com.example.autclub.InitialController.WelcomeActivity;
+import com.example.autclub.LoginSignupController.LoginActivity;
+import com.example.autclub.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import org.json.JSONArray;
@@ -48,19 +48,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     static ArrayList<Event> MSAevent = new ArrayList<>();
     static long epoch;
     static ActionBar actionBar = null;
-
-    private TextView calenderTextView;
-    private Button clubButton, reportButton , logoutButton;
-    private ViewFlipper viewFlipper;
-    private CompactCalendarView compactCalendarView;
-    private ImageButton homeButton;
-    private MenuItem notificationBell;
-
     Event e;
     ArrayList<Event> Calendarevent = new ArrayList<>();
     List<String> startdate = new ArrayList<>();
     List<String> epochtime = new ArrayList<>();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM-yyyy", Locale.getDefault());
+    private TextView calenderTextView;
+    private Button clubButton, reportButton, logoutButton;
+    private ViewFlipper viewFlipper;
+    private CompactCalendarView compactCalendarView;
+    private ImageButton homeButton;
+    private MenuItem notificationBell;
     private RequestQueue mQueue;
     private User user;
 
@@ -83,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -101,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewsfeedActivity.class);
-                startActivity(intent);
+                newActivityPage(NewsfeedActivity.class);
             }
         });
 
@@ -121,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -129,10 +127,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
-                //intent.putExtra("User", user);
-                startActivity(intent);
-
+                newActivityPage(NotificationActivity.class);
             }
         });
 
@@ -148,14 +143,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void eventHandleLogoutButton() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+        newActivityPage(LoginActivity.class);
     }
 
-
     private void eventHandleReportButton() {
-        Intent intent = new Intent(MainActivity.this, Report.class);
-        startActivity(intent);
+        newActivityPage(Report.class);
     }
 
     private void generalEvent() {
@@ -260,8 +252,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         clubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(MainActivity.this, ClubListPageActivity.class);
-                startActivity(in);
+                newActivityPage(ClubListPageActivity.class);
             }
         });
     }
@@ -358,7 +349,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     }
 
-
+    private void newActivityPage(Class nextClass) {
+        Intent intent = new Intent(MainActivity.this, nextClass);
+        MainActivity.this.startActivity(intent);
+    }
 }
 
 

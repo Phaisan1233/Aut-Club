@@ -24,10 +24,10 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
     Context context;
     List<String> nametag;
 
-    public ClubsListAdapter(Context context, List<Club> name,List<String>nametag) {
+    public ClubsListAdapter(Context context, List<Club> name, List<String> nametag) {
         this.context = context;
-        this.name=name;
-        this.nametag=nametag;
+        this.name = name;
+        this.nametag = nametag;
     }
 
     public ClubsListHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -41,7 +41,7 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
         int imageid = name.get(i).getImage();
         viewHolder.clubimages.setImageResource(imageid);
         viewHolder.clubimages.setTag(nametag.get(i));
-        viewHolder.FollowClubs.setText("FOLLOW "+name.get(i).getName());
+        viewHolder.FollowClubs.setText("FOLLOW " + name.get(i).getName());
     }
 
     @Override
@@ -70,27 +70,30 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
             clubimages.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1=new Intent(context,ClubPageActiviy.class);
-                    if(clubimages.getTag().equals("msa")){
-                        intent1.putExtra("msa","MSA");
-                        intent1.putExtra("exp","not");
-                        intent1.putExtra("horizon","NO");
-                        intent1.putExtra("stem","NO");
-                    }if(clubimages.getTag().equals("expression")){
-                        intent1.putExtra("exp","exp");
-                        intent1.putExtra("msa","not");
-                        intent1.putExtra("horizon","NO");
-                        intent1.putExtra("stem","NO");
-                    }if(clubimages.getTag().equals("horizon")){
-                        intent1.putExtra("exp","no");
-                        intent1.putExtra("msa","not");
-                        intent1.putExtra("horizon","HORIZON");
-                        intent1.putExtra("stem","NO");
-                    }if(clubimages.getTag().equals("stem")){
-                        intent1.putExtra("exp","No");
-                        intent1.putExtra("msa","not");
-                        intent1.putExtra("horizon","NO");
-                        intent1.putExtra("stem","STEM");
+                    Intent intent1 = new Intent(context, ClubPageActiviy.class);
+                    if (clubimages.getTag().equals("msa")) {
+                        intent1.putExtra("msa", "MSA");
+                        intent1.putExtra("exp", "not");
+                        intent1.putExtra("horizon", "NO");
+                        intent1.putExtra("stem", "NO");
+                    }
+                    if (clubimages.getTag().equals("expression")) {
+                        intent1.putExtra("exp", "exp");
+                        intent1.putExtra("msa", "not");
+                        intent1.putExtra("horizon", "NO");
+                        intent1.putExtra("stem", "NO");
+                    }
+                    if (clubimages.getTag().equals("horizon")) {
+                        intent1.putExtra("exp", "no");
+                        intent1.putExtra("msa", "not");
+                        intent1.putExtra("horizon", "HORIZON");
+                        intent1.putExtra("stem", "NO");
+                    }
+                    if (clubimages.getTag().equals("stem")) {
+                        intent1.putExtra("exp", "No");
+                        intent1.putExtra("msa", "not");
+                        intent1.putExtra("horizon", "NO");
+                        intent1.putExtra("stem", "STEM");
                     }
 
                     context.startActivity(intent1);

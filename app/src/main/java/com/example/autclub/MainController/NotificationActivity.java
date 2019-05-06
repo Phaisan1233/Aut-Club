@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class NotificationActivity extends AppCompatActivity {
     private TextView mTextViewResult;
     private RequestQueue mQueue;
-    private Button clear ;
+    private Button clear;
     private ActionBar actionBar;
 
 
@@ -51,7 +51,7 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    private void getNotification(){
+    private void getNotification() {
         String url = "https://graph.facebook.com/v3.3/me?fields=name%2Cposts%7Bstory%7D&access_token=EAAE6FvjiUB0BALY254ZADiVYD1pPifIHkWyjSUyjuc1ytf8NJPjQRZB4CwC7I3JHjYd5jd84UOjHu2n30AcrC30buGR22gKSR3TS7ZCfilEfnFSwnWswLgBpHCXqCK13maO0s3zUsqSsSGvnzyN9WaOXwZCyoPh6CZAuv73ZAP3gZDZD";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -66,13 +66,13 @@ public class NotificationActivity extends AppCompatActivity {
                                 String story;
                                 try {
                                     JSONObject a = jsonArray.getJSONObject(i);
-                                    story = a.getString("story")+"\n\n";
+                                    story = a.getString("story") + "\n\n";
 
                                 } catch (JSONException e) {
-                                    story = ""+name + " have a new post" + "\n\n";
+                                    story = "" + name + " have a new post" + "\n\n";
                                     continue;
                                 }
-                                txt = txt+story;
+                                txt = txt + story;
                             }
 
 

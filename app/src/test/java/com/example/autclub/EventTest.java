@@ -10,10 +10,11 @@ import org.junit.Test;
 
 import java.text.ParseException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EventTest {
     private Event event;
+
     public EventTest() {
     }
 
@@ -46,7 +47,7 @@ public class EventTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        assertEquals(expect,result);
+        assertEquals(expect, result);
 
     }
 }

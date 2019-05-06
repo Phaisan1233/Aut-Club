@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.example.autclub.MainController.MainActivity;
 import com.example.autclub.AppModel.User;
+import com.example.autclub.MainController.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {

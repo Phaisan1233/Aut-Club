@@ -1,6 +1,5 @@
 package com.example.autclub.MainController;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -12,7 +11,6 @@ import com.example.autclub.R;
 
 import java.util.ArrayList;
 
-import static com.example.autclub.MainController.MainActivity.MSAevent;
 import static com.example.autclub.MainController.MainActivity.event;
 
 

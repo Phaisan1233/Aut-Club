@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.autclub.R;
 
@@ -23,7 +22,7 @@ public class Instruction2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_instruction2, container, false);
-     //   ImageView imageview = (ImageView)rootView.findViewById(R.drawable.clubsinstruction);
+        //   ImageView imageview = (ImageView)rootView.findViewById(R.drawable.clubsinstruction);
         return rootView;
     }
 
