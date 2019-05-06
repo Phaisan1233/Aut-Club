@@ -93,7 +93,8 @@ logout = (Button)findViewById(R.id.btnLogOut);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMessage("It works");
+                Intent intent = new Intent(MainActivity.this, NewsfeedActivity.class);
+                startActivity(intent);
             }
         });
 
