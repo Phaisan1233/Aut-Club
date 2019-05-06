@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,9 +24,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.ClubController.ClubListPageActivity;
-import com.example.autclub.Event;
+import com.example.autclub.AppModel.Event;
+import com.example.autclub.LoginSignupController.LoginActivity;
 import com.example.autclub.InitialController.WelcomeActivity;
 import com.example.autclub.R;
+import com.example.autclub.AppModel.User;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import org.json.JSONArray;
@@ -47,10 +50,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     static ActionBar actionBar = null;
 
     private TextView calenderTextView;
-    private Button clubButton, reportButton,logout;
+    private Button clubButton, reportButton , logoutButton;
     private ViewFlipper viewFlipper;
     private CompactCalendarView compactCalendarView;
     private ImageButton homeButton;
+    private MenuItem notificationBell;
 
     Event e;
     ArrayList<Event> Calendarevent = new ArrayList<>();
@@ -58,21 +62,25 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     List<String> epochtime = new ArrayList<>();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM-yyyy", Locale.getDefault());
     private RequestQueue mQueue;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Intent intent = getIntent();
+        //user = (User) intent.getExtras().getSerializable("User");
 
         compactCalendarView = findViewById(R.id.compactcalendar_view);
         calenderTextView = findViewById(R.id.main_editText);
         calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         clubButton = findViewById(R.id.main_clubButton);
-        reportButton = (Button) findViewById(R.id.buttonreport);
-        homeButton = (ImageButton) findViewById(R.id.homeButton);
-logout = (Button)findViewById(R.id.btnLogOut);
+        reportButton = findViewById(R.id.buttonreport);
+        homeButton = findViewById(R.id.homeButton);
+        logoutButton = findViewById(R.id.main_btnLogOut);
+
         mQueue = Volley.newRequestQueue(this);
-        logout.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
@@ -106,7 +114,30 @@ logout = (Button)findViewById(R.id.btnLogOut);
 
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventHandleLogoutButton();
+            }
+        });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem notificationBell = menu.findItem(R.id.notification);
+        Button notificationButton = (Button) notificationBell.getActionView();
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                //intent.putExtra("User", user);
+                startActivity(intent);
 
+            }
+        });
+
+
+        return true;
     }
 
     private void viewFlip() {
@@ -115,6 +146,12 @@ logout = (Button)findViewById(R.id.btnLogOut);
         for (int i = 0; i < images.length; i++)
             flipperImages(images[i]);
     }
+
+    private void eventHandleLogoutButton() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 
     private void eventHandleReportButton() {
         Intent intent = new Intent(MainActivity.this, Report.class);
@@ -200,10 +237,10 @@ logout = (Button)findViewById(R.id.btnLogOut);
         for (int i = 0; i < data.length(); i++) {
             JSONObject desc = data.getJSONObject(i);
             String n = desc.getString("description");
-            String timeend = desc.getString("end_time");
+            String endTime = desc.getString("end_time");
             String name = desc.getString("name");
-            String starttime = desc.getString("start_time");
-            e = new Event(name, n, starttime, timeend);
+            String startTime = desc.getString("start_time");
+            e = new Event(name, n, startTime, endTime);
             if (MSAevent.size() != data.length()) {
                 MSAevent.add(e);
             }

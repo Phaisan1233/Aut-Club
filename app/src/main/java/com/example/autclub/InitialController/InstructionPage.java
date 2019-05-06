@@ -7,13 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.example.autclub.MainController.MainActivity;
+import com.example.autclub.AppModel.User;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Intent intent = getIntent();
+        //user = (User) intent.getExtras().getSerializable("User");
         addSlide(new Instruction1());
         addSlide(new Instruction2());
         addSlide(new Instruction3());
@@ -24,12 +28,7 @@ public class InstructionPage extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         //preferenceHelper.putIntro("yes");
-        Intent intent = new Intent(InstructionPage.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        //  intent.putExtra("User", new User());
-
-        startActivity(intent);
-
+        startNewPage();
         this.finish();
     }
 
@@ -37,11 +36,7 @@ public class InstructionPage extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         //preferenceHelper.putIntro("yes");
-        Intent intent = new Intent(InstructionPage.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        // intent.putExtra("User", new User());
-
-        startActivity(intent);
+        startNewPage();
         this.finish();
     }
 
@@ -64,6 +59,13 @@ public class InstructionPage extends AppIntro {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
 
+    }
+
+    public void startNewPage() {
+        Intent intent = new Intent(InstructionPage.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.putExtra("User", new User());
+        InstructionPage.this.startActivity(intent);
     }
 
 }

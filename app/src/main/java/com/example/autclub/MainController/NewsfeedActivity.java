@@ -7,7 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.example.autclub.Event;
+import com.example.autclub.AppModel.Event;
 import com.example.autclub.R;
 
 import java.util.ArrayList;
@@ -34,7 +34,10 @@ public class NewsfeedActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         showevents = findViewById(R.id.textView2);
-        Intent intent = getIntent();
+        st.add(event.toString());
+        showevents.setText(event.toString());
+
+        /*Intent intent = getIntent();
         String reply = intent.getStringExtra("ReplyMsa");
         String reply1 = intent.getStringExtra("ReplyExpression");
         String reply2 = intent.getStringExtra("ReplyHorizon");
@@ -54,7 +57,7 @@ public class NewsfeedActivity extends AppCompatActivity {
         if (reply3.equalsIgnoreCase("stemwomen club")) {
             st.add(event.toString());
             showevents.setText(event.toString());
-        }
+        }*/
 
 
     }

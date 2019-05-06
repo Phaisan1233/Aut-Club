@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.AppModel;
 
 import android.os.Parcel;
 import android.os.Parcelable;

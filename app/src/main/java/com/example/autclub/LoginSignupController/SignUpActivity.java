@@ -16,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.R;
-import com.example.autclub.User;
+import com.example.autclub.AppModel.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

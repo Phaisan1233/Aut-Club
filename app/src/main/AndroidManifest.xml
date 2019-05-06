@@ -13,13 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainController.ViewActivity"
-            android:parentActivityName=".ClubController.ClubListPageActivity">
-        </activity>
-        <activity android:name=".MainController.Report"></activity>
+
+        <activity android:name=".MainController.Report" />
         <activity android:name=".InitialController.InstructionPage" />
         <activity android:name=".LoginSignupController.ResetPasswordActivity" />
-        <activity android:name=".MainController.MainPageActivity" />
+        <activity android:name=".MainController.NotificationActivity" />
         <activity android:name=".LoginSignupController.SignUpActivity" />
         <activity android:name=".LoginSignupController.LoginActivity" />
         <activity android:name=".InitialController.WelcomeActivity">
@@ -39,6 +37,9 @@
         <activity
             android:name=".ClubController.ClubPageActiviy"
             android:parentActivityName=".ClubController.ClubListPageActivity" />
+        <activity android:name=".MainController.ViewActivity"
+            android:parentActivityName=".ClubController.ClubListPageActivity">
+        </activity>
     </application>
 
 </manifest>

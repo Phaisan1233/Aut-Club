@@ -16,10 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.autclub.Club;
+import com.example.autclub.AppModel.Club;
 import com.example.autclub.InitialController.InstructionPage;
 import com.example.autclub.R;
-import com.example.autclub.User;
+import com.example.autclub.AppModel.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

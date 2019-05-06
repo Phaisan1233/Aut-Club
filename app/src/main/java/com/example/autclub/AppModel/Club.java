@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.AppModel;
 
 public class Club {
     private int clubID;

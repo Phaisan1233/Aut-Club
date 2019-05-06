@@ -1,5 +1,7 @@
 package com.example.autclub;
 
+import com.example.autclub.AppModel.Club;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.AppModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;

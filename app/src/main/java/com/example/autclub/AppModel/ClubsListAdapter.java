@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.AppModel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.autclub.ClubController.ClubPageActiviy;
 import com.example.autclub.MainController.NewsfeedActivity;
+import com.example.autclub.R;
 
 import java.util.ArrayList;
 import java.util.List;
