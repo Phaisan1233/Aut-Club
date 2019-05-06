@@ -74,6 +74,7 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
                 public void onClick(View v) {
                     Intent intent1=new Intent(c,Clubpage.class);
 
+
                     c.startActivity(intent1);
                 }
             });
