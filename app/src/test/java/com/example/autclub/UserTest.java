@@ -34,7 +34,7 @@ public class UserTest {
     }
 
     @Test
-    public void getSetUserNameTest() {
+    public void getAndSetUserNameTest() {
         System.out.println("find : testing get and set username method");
         String expect = "admin";
         user.setUserName(expect);
@@ -43,30 +43,39 @@ public class UserTest {
     }
 
     @Test
-    public void setUserName() {
+    public void getAndSetFirstNameTest() {
+        System.out.println("find : testing get and set first name method");
+        String expect = "Bob";
+        user.setFirstName(expect);
+        String result = user.getFirstName();
+        assertEquals(expect,result);
     }
 
     @Test
-    public void getFirstName() {
+    public void getAndSetLastNameTest() {
+        System.out.println("find : testing get and set last name method");
+        String expect = "jame";
+        user.setLastName(expect);
+        String result = user.getLastName();
+        assertEquals(expect,result);
     }
 
     @Test
-    public void setFirstName() {
+    public void getAndSetEmailTest() {
+        System.out.println("find : testing get and set email method");
+        String expect = "admin@gmail.com";
+        user.setEmail(expect);
+        String result = user.getEmail();
+        assertEquals(expect,result);
     }
 
     @Test
-    public void getLastName() {
+    public void getAndSetTimeTest(){
+        System.out.println("find : testing get and set time method");
+        double expect = 20190506131549.466;
+        user.setTimeStamp(expect);
+        double result = user.getTimeStamp();
+        assertEquals(expect,result,0);
     }
 
-    @Test
-    public void setLastName() {
-    }
-
-    @Test
-    public void getEmail() {
-    }
-
-    @Test
-    public void setEmail() {
-    }
 }

@@ -7,7 +7,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private long timeStamp;
+    private double timeStamp;
     private Club followClub[];
     private Club joinCLub[];
 
@@ -18,6 +18,15 @@ public class User implements Serializable {
         setLastName(lastName);
         setEmail(email);
     }
+
+    public User(String userName, String firstName, String lastName, String email, long timeStamp) {
+        setUserName(userName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setTimeStamp(timeStamp);
+    }
+
     public User() {
     }
 
@@ -53,11 +62,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public long getTimeStamp() {
+    public double getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(double timeStamp) {
         this.timeStamp = timeStamp;
     }
 
