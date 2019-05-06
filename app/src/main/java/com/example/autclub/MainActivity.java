@@ -6,8 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,13 +33,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.ViewFlipper;
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
 
     TextView v, m;
     Button b;
+    ViewFlipper v_flip ;
 
     private RequestQueue mQueue;
 
@@ -76,6 +82,47 @@ public class MainActivity extends AppCompatActivity {
         ac.setDisplayHomeAsUpEnabled(false);
         ac.setTitle(null);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
+
+
+
+        Button button = (Button) findViewById(R.id.buttonreport);
+       ImageButton homebutton = (ImageButton) findViewById(R.id.homeButton);
+
+        homebutton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(MainActivity.this, "It works", Toast.LENGTH_LONG).show();
+            }});
+        //casting because it wants the widget instead of the view
+
+
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                Intent intent = new Intent(MainActivity.this, Report.class);
+                startActivity(intent);
+
+            }
+
+        });
+
+
+
+        int images [] = {R.drawable.horizon,R.drawable.expression,R.drawable.horizon1,R.drawable.horizon2,R.drawable.msa2,R.drawable.msa3,R.drawable.msa4};
+
+        v_flip = findViewById(R.id.v_flip);
+
+        for(int i =0; i<images.length; i++)
+            flipperImages(images[i]);
+
+
+
+
 
 
     }
@@ -272,6 +319,56 @@ public class MainActivity extends AppCompatActivity {
         epochtime.add(nice);
         return nice;
     }
+
+
+
+
+    public void flipperImages (int image)
+    {
+        ImageView img = new ImageView(this);
+        img.setBackgroundResource(image);
+
+        v_flip.addView(img);
+        v_flip.setFlipInterval(4000);
+        v_flip.setAutoStart(true);
+
+        v_flip.setInAnimation(this,android.R.anim.slide_in_left);
+        v_flip.setOutAnimation(this,android.R.anim.slide_out_right);
+    }
+
+
+
+    public void showPopup (View v)
+    {
+        PopupMenu popup = new PopupMenu(this,v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.settings);
+        popup.show();
+
+    }
+
+    @Override
+
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.item1:
+                Toast.makeText(this,"Item1clicked",Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.item2:
+                Toast.makeText(this,"item clicked",Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+
+
+
 
 
 }

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".InstructionPage"></activity>
+        <activity android:name=".Report"></activity>
+        <activity android:name=".InstructionPage" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".MainPageActivity" />
         <activity android:name=".SignUpActivity" />
@@ -25,14 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Newsfeed"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".listing"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Clubpage"
-            android:parentActivityName=".listing"/>
-
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".Newsfeed"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".listing"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Clubpage"
+            android:parentActivityName=".listing" />
     </application>
 
 </manifest>
