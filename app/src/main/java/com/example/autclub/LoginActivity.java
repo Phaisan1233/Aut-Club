@@ -145,8 +145,9 @@ final Button guestuserButton = findViewById(R.id.login_btnGuest);
         User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
         Log.d("user", "responseHandleSuccess: "+String.valueOf(user.getTimeStamp()));
 
-        Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
-        intent.putExtra("User", user);
+        Intent intent = new Intent(LoginActivity.this,InstructionPage.class);
+        startActivity(intent);
+        //intent.putExtra("User", user);
         LoginActivity.this.startActivity(intent);
     }
 
