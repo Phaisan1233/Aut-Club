@@ -18,37 +18,40 @@ import java.util.List;
 
 public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.ClubsListHolder> {
 
-    List<Club> clubs;
-    Context context;
 
-    public ClubsListAdapter(Context context, List<Club> clubs) {
+    List<Club> name;
+    Context context;
+    List<String> nametag;
+
+    public ClubsListAdapter(Context context, List<Club> clubs,List<String>nametag) {
         this.context = context;
-        this.clubs = clubs;
+        this.name=name;
+        this.nametag=nametag;
     }
 
     public ClubsListHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.image, viewGroup, false);
-        ClubsListHolder clubs = new ClubsListHolder(view, context, this.clubs);
+        ClubsListHolder clubs = new ClubsListHolder(view, context, this.name);
         return clubs;
     }
 
     @Override
     public void onBindViewHolder(ClubsListHolder viewHolder, int i) {
-        int imageid = clubs.get(i).getImage();
+        int imageid = name.get(i).getImage();
         viewHolder.clubimages.setImageResource(imageid);
-        viewHolder.FollowClubs.setText("FOLLOW " + clubs.get(i).getName());
+        viewHolder.clubimages.setTag(nametag.get(i));
+        viewHolder.FollowClubs.setText("FOLLOW "+name.get(i).getName());
     }
 
     @Override
     public int getItemCount() {
-        return clubs.size();
+        return name.size();
     }
 
     public void SearchClubs(List<Club> newList) {
-        clubs = new ArrayList<>();
-        clubs.addAll(newList);
+        name = new ArrayList<>();
+        name.addAll(newList);
         notifyDataSetChanged();
-
     }
 
     public static class ClubsListHolder extends RecyclerView.ViewHolder {
@@ -66,7 +69,29 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
             clubimages.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(context, ClubPageActiviy.class);
+                    Intent intent1=new Intent(context,Clubpage.class);
+                    if(clubimages.getTag().equals("msa")){
+                        intent1.putExtra("msa","MSA");
+                        intent1.putExtra("exp","not");
+                        intent1.putExtra("horizon","NO");
+                        intent1.putExtra("stem","NO");
+                    }if(clubimages.getTag().equals("expression")){
+                        intent1.putExtra("exp","exp");
+                        intent1.putExtra("msa","not");
+                        intent1.putExtra("horizon","NO");
+                        intent1.putExtra("stem","NO");
+                    }if(clubimages.getTag().equals("horizon")){
+                        intent1.putExtra("exp","no");
+                        intent1.putExtra("msa","not");
+                        intent1.putExtra("horizon","HORIZON");
+                        intent1.putExtra("stem","NO");
+                    }if(clubimages.getTag().equals("stem")){
+                        intent1.putExtra("exp","No");
+                        intent1.putExtra("msa","not");
+                        intent1.putExtra("horizon","NO");
+                        intent1.putExtra("stem","STEM");
+                    }
+
                     context.startActivity(intent1);
                 }
             });

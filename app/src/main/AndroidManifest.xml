@@ -36,6 +36,8 @@
         <activity
             android:name=".ClubController.ClubPageActiviy"
             android:parentActivityName=".ClubController.ClubListPageActivity" />
+        <activity android:name=".View"
+            android:parentActivityName=".Clubpage"/>
     </application>
 
 </manifest>
