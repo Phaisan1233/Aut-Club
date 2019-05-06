@@ -1,6 +1,7 @@
 package com.example.autclub;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private String userName;
@@ -8,8 +9,7 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private double timeStamp;
-    private Club followClub[];
-    private Club joinCLub[];
+    private ArrayList<Club> followClub;
 
 
     public User(String userName, String firstName, String lastName, String email) {
@@ -71,6 +71,13 @@ public class User implements Serializable {
         this.timeStamp = timeStamp;
     }
 
+    public ArrayList<Club> getFollowClub() {
+        return followClub;
+    }
+
+    public void setFollowClub(ArrayList<Club> followClub) {
+        this.followClub = followClub;
+    }
 
     @Override
     public String toString() {
@@ -80,6 +87,6 @@ public class User implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", timeStamp=" + timeStamp +
-                '}';
+                '}'+followClub.toString();
     }
 }

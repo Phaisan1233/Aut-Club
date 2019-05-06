@@ -13,7 +13,7 @@ import static com.example.autclub.MainActivity.MSAevent;
 import static com.example.autclub.MainActivity.event;
 
 
-public class Newsfeed extends AppCompatActivity {
+public class NewsfeedActivity extends AppCompatActivity {
 
     TextView showevents;
    // Event event;

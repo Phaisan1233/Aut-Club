@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:background="@drawable/background"
-    tools:context=".SignUpActivity"
-    >
+    tools:context=".LoginSignupController.SignUpActivity">
 
     <EditText
         android:id="@+id/reset.userName"

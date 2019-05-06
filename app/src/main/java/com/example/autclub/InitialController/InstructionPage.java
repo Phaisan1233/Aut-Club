@@ -1,35 +1,20 @@
-package com.example.autclub;
+package com.example.autclub.InitialController;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
 
+import com.example.autclub.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
 
-    //private PreferenceHelper preferenceHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-
-        //preferenceHelper = new PreferenceHelper(this);
-
-        /*if(preferenceHelper.getIntro().equals("no")){
-        Intent intent = new Intent(InstructionPage.this, MainPageActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("User", new User());
-        startActivity(intent);
-        this.finish();
-      }*/
-
         addSlide(new Instruction1());
         addSlide(new Instruction2());
         addSlide(new Instruction3());

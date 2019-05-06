@@ -3,13 +3,28 @@ package com.example.autclub;
 import org.json.JSONObject;
 
 public class Club {
+    private int clubID;
     private String name;
+    private int image;
     private String tokens;
-    private JSONObject jsonObject;
 
-    public Club(String name, String tokens) {
+    public Club(String name, int image) {
         this.name = name;
-        this.tokens = tokens;
+        this.image = image;
+    }
+
+    public Club(int clubID, String name, String tokens) {
+        setClubID(clubID);
+        setName(name);
+        setTokens(tokens);
+    }
+
+    public int getClubID() {
+        return clubID;
+    }
+
+    public void setClubID(int clubID) {
+        this.clubID = clubID;
     }
 
     public String getName() {
@@ -20,6 +35,14 @@ public class Club {
         this.name = name;
     }
 
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     public String getTokens() {
         return tokens;
     }
@@ -27,4 +50,6 @@ public class Club {
     public void setTokens(String tokens) {
         this.tokens = tokens;
     }
+
+
 }

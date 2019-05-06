@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.autclub.InitialController.WelcomeActivity;
+
 public class MainPageActivity extends AppCompatActivity {
     private TextView mTextViewResult;
 Button logoutButton;
@@ -28,7 +30,7 @@ Button logoutButton;
 //                store.clear();//to clear user data when user log out
 //                store.setLoggedInUser(false);// it says that the user is logged out now
 
-                Intent intent = new Intent(MainPageActivity.this,WelcomeActivity.class);
+                Intent intent = new Intent(MainPageActivity.this, WelcomeActivity.class);
                 startActivity(intent);
             }
         });

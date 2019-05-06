@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.LoginSignupController;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.autclub.R;
+import com.example.autclub.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                     message("Please enter a valid email address ", "OK");
                 } else {
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    String timeFormat = timestamp.toString().replaceAll("[\\s\\:-]", "");
+                    String timeFormat = timestamp.toString().replaceAll("[\\s:-]", "");
                     final User user = new User(username, firstName, lastName, email,Double.parseDouble(timeFormat));
                     eventHandleRegisterButton(user, password);
                 }

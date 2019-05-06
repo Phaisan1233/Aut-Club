@@ -1,13 +1,12 @@
-package com.example.autclub;
+package com.example.autclub.InitialController;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.autclub.R;
 
 
 public class Instruction1 extends Fragment {

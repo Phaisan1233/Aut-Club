@@ -16,7 +16,6 @@ public class Event implements Parcelable {
     private List<Event> list;
 
     public Event(){
-
     }
 
     public Event(String Name, String descript, String start, String end) throws ParseException {
@@ -31,7 +30,6 @@ public class Event implements Parcelable {
         description = in.readString();
         endtime = in.readString();
         starttime = in.readString();
-      //list = in.createTypedArrayList(Event.CREATOR);
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -72,15 +70,6 @@ public class Event implements Parcelable {
     }
 
     public void setEndtime(String endtime) throws ParseException {
-        /*SimpleDateFormat old=new SimpleDateFormat("yyyy-MM-dd");
-        Date ir=old.parse(endtime.substring(0,10));
-        SimpleDateFormat j=new SimpleDateFormat("dd-MM-yyyy");
-        String y=j.format(ir);
-      SimpleDateFormat New=new SimpleDateFormat("HH:mm:ss");
-      Date time=New.parse(endtime.substring(11,19));
-      SimpleDateFormat n=new SimpleDateFormat("HH:mm:ss");
-      String t=n.format(time);
-        String nice=y.concat(" "+t);*/
 
         this.endtime = DateFormatter(endtime);
     }
@@ -90,16 +79,6 @@ public class Event implements Parcelable {
     }
 
     public void setStartime(String starttime) throws ParseException {
-      /* SimpleDateFormat old=new SimpleDateFormat("yyyy-MM-dd");
-        Date ir=old.parse(starttime.substring(0,10));
-        SimpleDateFormat j=new SimpleDateFormat("dd-MM-yyyy");
-        String y=j.format(ir);
-        SimpleDateFormat New=new SimpleDateFormat("HH:mm:ss");
-        Date time=New.parse(starttime.substring(11,19));
-        SimpleDateFormat n=new SimpleDateFormat("HH:mm:ss");
-        String t=n.format(time);
-        String nice=y.concat(" "+t);*/
-      String nice="";
         this.starttime = DateFormatter(starttime);
     }
 
@@ -136,7 +115,6 @@ public class Event implements Parcelable {
         dest.writeString(description);
         dest.writeString(endtime);
         dest.writeString(starttime);
-        //dest.writeTypedList(list);
     }
 
 

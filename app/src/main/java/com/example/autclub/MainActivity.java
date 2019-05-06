@@ -40,15 +40,13 @@ import android.widget.ViewFlipper;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-
-    TextView v, m;
-    Button b;
+    TextView textView;
+    Button button;
     ViewFlipper v_flip;
+    CompactCalendarView compactCalendarView;
 
     private RequestQueue mQueue;
 
-
-    CompactCalendarView compactCalendarView;
     Event e;
     static ArrayList<Event> event = new ArrayList<>();
     static ArrayList<Event> MSAevent = new ArrayList<>();
@@ -56,9 +54,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     List<String> startdate = new ArrayList<>();
     List<String> epochtime = new ArrayList<>();
 
-
     static long epoch;
-    static ActionBar ac = null;
+    static ActionBar actionBar = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM-yyyy", Locale.getDefault());
 
     @Override
@@ -66,23 +63,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         compactCalendarView = findViewById(R.id.compactcalendar_view);
-        v = findViewById(R.id.editText);
-        // v.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
-        b = findViewById(R.id.Button);
-        v.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        textView = findViewById(R.id.main_editText);
+        textView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        button = findViewById(R.id.main_clubButton);
+
         mQueue = Volley.newRequestQueue(this);
 
         jsonParse();
         MSAjsonParse();
         SendEvents();
 
-
-        ac = getSupportActionBar();
-
-        ac.setDisplayHomeAsUpEnabled(false);
-        ac.setTitle(null);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setTitle(null);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
 
@@ -121,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     public void jsonParse() {
-
         String url = "https://graph.facebook.com/v3.3/me/events?access_token=EAAFYYh2QEZCQBAIfnskP0OGgpVbN0k94qudZAZCgRZA7Rd8FfuxnOgInp2YA0cvcDdBNeGWwfB1DJHhYNFwpE1IwcbCfu4A6C0ZARJ3sCYPU8yZBqQVx3X00gtxjnaZAF8JYZC5ulysOrrkfvx7mZAaCTzZAtXqXgmVWfIfa5yZBvgZCkttyLcwQDmppRIAmApXBfcjsAwZA8E5OlSQZDZD";
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -129,28 +122,26 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     public void onResponse(String response) {
 
                         try {
-                            JSONObject ob = new JSONObject(response);
-                            String feed = ob.getString("data");
-
+                            JSONObject jsonObject = new JSONObject(response);
+                            String feed = jsonObject.getString("data");
 
                             JSONArray data = new JSONArray(feed);
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject desc = data.getJSONObject(i);
-                                String n = desc.getString("description");
-                                String timeend = desc.getString("end_time");
+                                String description = desc.getString("description");
+                                String endTime = desc.getString("end_time");
                                 String name = desc.getString("name");
-                                String starttime = desc.getString("start_time");
-                                e = new Event(name, n, starttime, timeend);
+                                String startTime = desc.getString("start_time");
+                                e = new Event(name, description, startTime, endTime);
 
                                 Calendarevent.add(e);
-
 
                                 String u = "";
                                 if (event.size() != data.length()) {
                                     event.add(e);
                                 }
-                                addEvents(name, u, starttime, timeend);
-                                startdate.add(starttime.substring(0, 10));
+                                addEvents(name, u, startTime, endTime);
+                                startdate.add(startTime.substring(0, 10));
 
                             }
 
@@ -180,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONObject ob = new JSONObject(response);
                             String feed = ob.getString("data");
@@ -200,14 +190,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                             }
 
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -225,33 +212,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         e.setDescription(two);
         e.setStartime(the);
         e.setEndtime(fo);
-
-
         formatTime(e.getStartime());
-
-
     }
 
     public void SendEvents() {
-        b.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(MainActivity.this, listing.class);
-
-
+                Intent in = new Intent(MainActivity.this, ClubListPageActivity.class);
                 startActivity(in);
-
-
             }
         });
     }
 
-
-    /**
-     * This will get us time in epoch so that we can use it to add our events in the Calendar.
-     *
-     * @param y
-     */
     public void formatTime(String y) {
 
         try {
@@ -259,17 +232,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             Date r = form.parse(y);
             epoch = r.getTime();
 
-
             final com.github.sundeepk.compactcalendarview.domain.Event event1 = new com.github.sundeepk.compactcalendarview.domain.Event(Color.GREEN, epoch, Calendarevent.toString());
             compactCalendarView.addEvent(event1);
-
 
             compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
 
                 @Override
                 public void onDayClick(Date dateClicked) {
                     try {
-                        if ((startdate.contains(dateclicked(dateClicked.toString())))) {
+                        if (startdate.contains(dateclicked(dateClicked.toString()))) {
                             for (int i = 0; i < startdate.size(); i++) {
                                 if (startdate.get(i).equalsIgnoreCase(dateclicked(dateClicked.toString()))) {
                                     Toast.makeText(getBaseContext(), " " + Calendarevent.get(i), Toast.LENGTH_LONG).show();
@@ -282,17 +253,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     } catch (ParseException e1) {
                         e1.printStackTrace();
                     }
-
-
                 }
-
                 @Override
                 public void onMonthScroll(Date firstDayOfNewMonth) {
                     compactCalendarView.shouldScrollMonth(true);
-
-
-
-
+                    textView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
                 }
             });
         } catch (ParseException e1) {
@@ -340,11 +305,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.item1:
                 Toast.makeText(this, "Item1clicked", Toast.LENGTH_SHORT).show();
                 return true;
-
             case R.id.item2:
                 Toast.makeText(this, "item clicked", Toast.LENGTH_SHORT).show();
                 return true;
-
             default:
                 return false;
         }

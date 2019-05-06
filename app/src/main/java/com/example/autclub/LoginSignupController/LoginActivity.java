@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.LoginSignupController;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -16,10 +16,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.autclub.Club;
+import com.example.autclub.InitialController.InstructionPage;
+import com.example.autclub.R;
+import com.example.autclub.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,18 +46,13 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login_btnLogin);
         final Button resetPasswordButton = findViewById(R.id.login_resetButton);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
-final Button guestuserButton = findViewById(R.id.login_btnGuest);
+        final Button guestuserButton = findViewById(R.id.login_btnGuest);
 
         guestuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Intent intent = new Intent(LoginActivity.this,MainPageActivity.class);
-//
-//               intent.putExtra("User",new User());
-//                startActivity(intent);
-
-                Intent intent = new Intent(LoginActivity.this,InstructionPage.class);
-                startActivity(intent);            }
+                eventHandleGuestButton();
+            }
         });
 
         signupTextView.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +75,11 @@ final Button guestuserButton = findViewById(R.id.login_btnGuest);
                 eventHandleSresetPasswordButton();
             }
         });
+    }
+
+    private void eventHandleGuestButton() {
+        Intent intent = new Intent(LoginActivity.this, InstructionPage.class);
+        startActivity(intent);
     }
 
     private void eventHandleSresetPasswordButton() {
@@ -142,10 +148,23 @@ final Button guestuserButton = findViewById(R.id.login_btnGuest);
         String lastName = jsonObject.getString("lastName");
         String email = jsonObject.getString("email");
         String time = jsonObject.getString("time");
-        User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
-        Log.d("user", "responseHandleSuccess: "+String.valueOf(user.getTimeStamp()));
+        ArrayList<Club> clubList = new ArrayList<>();
+        JSONArray arrayClub = jsonObject.getJSONArray("club");
+        for (int i = 0; i < arrayClub.length(); i++) {
+            JSONArray jsonArray = arrayClub.getJSONArray(i);
+            String clubID = jsonArray.getString(0);
+            String clubName = jsonArray.getString(1);
+            String tokens = jsonArray.getString(2);
 
-        Intent intent = new Intent(LoginActivity.this,InstructionPage.class);
+            Log.d("user", "responseHandleSuccess: " +clubID+"|"+clubName+"|"+tokens);
+            Club club = new Club(Integer.parseInt(clubID), clubName, tokens);
+            clubList.add(club);
+        }
+        User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
+        user.setFollowClub(clubList);
+        Log.d("user", "responseHandleSuccess: " + user.toString());
+
+        Intent intent = new Intent(LoginActivity.this, InstructionPage.class);
         startActivity(intent);
         LoginActivity.this.startActivity(intent);
     }

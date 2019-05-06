@@ -44,7 +44,7 @@ public class UserTest {
 
     @Test
     public void getAndSetFirstNameTest() {
-        System.out.println("find : testing get and set first name method");
+        System.out.println("find : testing get and set first clubs method");
         String expect = "Bob";
         user.setFirstName(expect);
         String result = user.getFirstName();
@@ -53,7 +53,7 @@ public class UserTest {
 
     @Test
     public void getAndSetLastNameTest() {
-        System.out.println("find : testing get and set last name method");
+        System.out.println("find : testing get and set last clubs method");
         String expect = "jame";
         user.setLastName(expect);
         String result = user.getLastName();
