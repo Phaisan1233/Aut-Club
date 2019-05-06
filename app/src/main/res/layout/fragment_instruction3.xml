@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/Intro3"
+    android:background="@drawable/background"
     tools:context=".Instruction3">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
+        android:textColor="#F8F7F7"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Intro 3"/>
 

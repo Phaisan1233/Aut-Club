@@ -5,26 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@color/Intro3"
+    android:background="@drawable/background"
     tools:context=".WelcomeActivity">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="167dp"
-        android:layout_height="53dp"
+        android:layout_width="219dp"
+        android:layout_height="63dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/welcome"
-        android:textSize="32sp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434" />
+        app:layout_constraintVertical_bias="0.486" />
 
     <Button
         android:id="@+id/btnnext"
