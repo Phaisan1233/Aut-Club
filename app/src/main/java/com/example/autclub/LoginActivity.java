@@ -129,7 +129,9 @@ public class LoginActivity extends AppCompatActivity {
         String firstName = jsonObject.getString("firstName");
         String lastName = jsonObject.getString("lastName");
         String email = jsonObject.getString("email");
-        User user = new User(userName, firstName, lastName, email);
+        String time = jsonObject.getString("time");
+        User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
+        Log.d("user", "responseHandleSuccess: "+String.valueOf(user.getTimeStamp()));
 
         Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
         intent.putExtra("User", user);

@@ -19,7 +19,7 @@ public class User implements Serializable {
         setEmail(email);
     }
 
-    public User(String userName, String firstName, String lastName, String email, long timeStamp) {
+    public User(String userName, String firstName, String lastName, String email, double timeStamp) {
         setUserName(userName);
         setFirstName(firstName);
         setLastName(lastName);
@@ -77,6 +77,7 @@ public class User implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
 }

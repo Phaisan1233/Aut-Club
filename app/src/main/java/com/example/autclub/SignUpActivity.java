@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,9 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (!email.contains("@") || !email.contains(".com")) {
                     message("Please enter a valid email address ", "OK");
                 } else {
-                    final User user = new User(username, firstName, lastName, email);
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    String timeFormat = timestamp.toString().replaceAll("[\\s\\:-]", "");
+                    final User user = new User(username, firstName, lastName, email,Double.parseDouble(timeFormat));
                     eventHandleRegisterButton(user, password);
                 }
             }
@@ -115,6 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
                 params.put("firstName", user.getFirstName());
                 params.put("lastName", user.getLastName());
                 params.put("email", user.getEmail());
+                params.put("time", String.valueOf(user.getTimeStamp()));
                 return params;
             }
         };
