@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".MainController.ViewActivity"
+            android:parentActivityName=".ClubController.ClubListPageActivity">
+        </activity>
         <activity android:name=".MainController.Report"></activity>
         <activity android:name=".InitialController.InstructionPage" />
         <activity android:name=".LoginSignupController.ResetPasswordActivity" />

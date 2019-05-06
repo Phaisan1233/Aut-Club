@@ -65,7 +65,6 @@ public class ClubPageActiviy extends AppCompatActivity {
             }
         });
 
-        //t.setText("YAY!!!");
     }
 }
 
