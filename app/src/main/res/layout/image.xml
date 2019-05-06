@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Linearlayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="12dp"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/msa1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        android:scaleType="fitXY"
+        android:src="@drawable/msa" />
+
+ <!--   <TextView
+        android:id="@+id/image1_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Image 1" />-->
+    <Button
+        android:id="@+id/image1_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="Image 1" />
+
+</LinearLayout>

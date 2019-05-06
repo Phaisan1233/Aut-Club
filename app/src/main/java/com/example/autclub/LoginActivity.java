@@ -133,8 +133,8 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
         Log.d("user", "responseHandleSuccess: "+String.valueOf(user.getTimeStamp()));
 
-        Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
-        intent.putExtra("User", user);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+       // intent.putExtra("User", user);
         LoginActivity.this.startActivity(intent);
     }
 
