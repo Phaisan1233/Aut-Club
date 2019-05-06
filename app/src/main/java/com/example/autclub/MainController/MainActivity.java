@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.ClubController.ClubListPageActivity;
 import com.example.autclub.Event;
+import com.example.autclub.InitialController.WelcomeActivity;
 import com.example.autclub.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     static ActionBar actionBar = null;
 
     private TextView calenderTextView;
-    private Button clubButton, reportButton;
+    private Button clubButton, reportButton,logout;
     private ViewFlipper viewFlipper;
     private CompactCalendarView compactCalendarView;
     private ImageButton homeButton;
@@ -69,8 +70,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         clubButton = findViewById(R.id.main_clubButton);
         reportButton = (Button) findViewById(R.id.buttonreport);
         homeButton = (ImageButton) findViewById(R.id.homeButton);
-
+logout = (Button)findViewById(R.id.btnLogOut);
         mQueue = Volley.newRequestQueue(this);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+               startActivity(intent);
+            }
+        });
 
         generalEvent();
         MSAjsonParse();
