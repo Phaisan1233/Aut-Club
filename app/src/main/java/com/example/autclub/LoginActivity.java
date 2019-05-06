@@ -40,7 +40,19 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login_btnLogin);
         final Button resetPasswordButton = findViewById(R.id.login_resetButton);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
+final Button guestuserButton = findViewById(R.id.login_btnGuest);
 
+        guestuserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//               Intent intent = new Intent(LoginActivity.this,MainPageActivity.class);
+//
+//               intent.putExtra("User",new User());
+//                startActivity(intent);
+
+                Intent intent = new Intent(LoginActivity.this,InstructionPage.class);
+                startActivity(intent);            }
+        });
 
         signupTextView.setOnClickListener(new View.OnClickListener() {
             @Override
