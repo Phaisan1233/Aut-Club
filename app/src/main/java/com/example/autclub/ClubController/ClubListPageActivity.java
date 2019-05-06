@@ -18,35 +18,45 @@ import java.util.List;
 
 public class ClubListPageActivity extends AppCompatActivity {
 
+    private List<String> imagestag = new ArrayList<>();
     private List<Club> imagename = new ArrayList<>();
-    private RecyclerView.LayoutManager layoutManager;
+    public static ArrayList<String> description = new ArrayList<>();
+    private RecyclerView.LayoutManager ly;
     private ClubsListAdapter Clubadapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clublist);
-
+        imagestag.add("horizon");
+        imagestag.add("expression");
+        imagestag.add("msa");
+        imagestag.add("stem");
         imagename.add(new Club("Horizon", R.drawable.horizon));
         imagename.add(new Club("Expression", R.drawable.expression));
         imagename.add(new Club("MSA", R.drawable.msa));
         imagename.add(new Club("StemWomen", R.drawable.stemwomen));
+        description.add("The Muslim Students Association(MSA) at Auckland University of Technology (AUT) is dedicated to helping our fellow brothers and sisters.");
+        description.add("Horizon. ADP is a club from AUT who focus on creating a sense of community wihtin the AUT student body. The club provides social events, casual dance classes and opportunities for students who want to further develop themselves both in dance and in their own lives. We believe every day should be Pink Shirt Day and love our craft!");
+        description.add("Expression is a fun way to express yourself through dance! All styles are welcome. Join in to have fun, learn a few moves and loosen up from your hectic uni life!");
+        description.add("This group is to support and encourage women in STEM and help them develop the skills they need to do effective networking and succeed in their field of study.");
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        layoutManager = new GridLayoutManager(ClubListPageActivity.this, 2);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        Clubadapter = new ClubsListAdapter(ClubListPageActivity.this, imagename);
-        recyclerView.setAdapter(Clubadapter);
+
+        RecyclerView r = findViewById(R.id.recycler);
+        ly = new GridLayoutManager(ClubListPageActivity.this, 2);
+        r.setHasFixedSize(true);
+        r.setLayoutManager(ly);
+        Clubadapter = new ClubsListAdapter(ClubListPageActivity.this, imagename, imagestag);
+        r.setAdapter(Clubadapter);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem search = menu.findItem(R.id.search);
+        SearchView v = (SearchView) search.getActionView();
+        v.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -54,9 +64,10 @@ public class ClubListPageActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                List<Club> clubs = new ArrayList<>();
-                clubs = LookForClubs(clubs, s.toLowerCase());
-                Clubadapter.SearchClubs(clubs);
+                List<Club> n = new ArrayList<>();
+                n = LookForClubs(n, s.toLowerCase());
+
+                Clubadapter.SearchClubs(n);
                 return true;
             }
         });
@@ -72,3 +83,4 @@ public class ClubListPageActivity extends AppCompatActivity {
         return n;
     }
 }
+

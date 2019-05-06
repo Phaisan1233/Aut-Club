@@ -23,7 +23,7 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
     Context context;
     List<String> nametag;
 
-    public ClubsListAdapter(Context context, List<Club> clubs,List<String>nametag) {
+    public ClubsListAdapter(Context context, List<Club> name,List<String>nametag) {
         this.context = context;
         this.name=name;
         this.nametag=nametag;
@@ -69,7 +69,7 @@ public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.Club
             clubimages.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1=new Intent(context,Clubpage.class);
+                    Intent intent1=new Intent(context,ClubPageActiviy.class);
                     if(clubimages.getTag().equals("msa")){
                         intent1.putExtra("msa","MSA");
                         intent1.putExtra("exp","not");

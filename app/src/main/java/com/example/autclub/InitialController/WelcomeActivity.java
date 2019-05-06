@@ -10,7 +10,7 @@ import com.example.autclub.LoginSignupController.LoginActivity;
 import com.example.autclub.R;
 
 public class WelcomeActivity<login> extends AppCompatActivity
-        //     implements View.OnClickListener
+        //     implements ViewActivity.OnClickListener
 {
 
     private Button next;
