@@ -7,15 +7,18 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private long timeStamp;
     private Club followClub[];
     private Club joinCLub[];
 
 
     public User(String userName, String firstName, String lastName, String email) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        setUserName(userName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+    }
+    public User() {
     }
 
     public String getUserName() {
@@ -48,6 +51,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     @Override
