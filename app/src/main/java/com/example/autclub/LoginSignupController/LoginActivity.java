@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
             String clubName = jsonArray.getString(1);
             String tokens = jsonArray.getString(2);
 
-            Log.d("user", "responseHandleSuccess: " +clubID+"|"+clubName+"|"+tokens);
+            Log.d("user", "responseHandleSuccess: " + clubID + "|" + clubName + "|" + tokens);
             Club club = new Club(Integer.parseInt(clubID), clubName, tokens);
             clubList.add(club);
         }

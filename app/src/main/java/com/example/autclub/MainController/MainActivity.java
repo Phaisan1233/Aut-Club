@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.MainController;
 
 
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,12 +22,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.autclub.ClubController.ClubListPageActivity;
+import com.example.autclub.Event;
+import com.example.autclub.R;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,28 +38,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.ViewFlipper;
-
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    TextView textView;
-    Button button;
-    ViewFlipper v_flip;
-    CompactCalendarView compactCalendarView;
-
-    private RequestQueue mQueue;
-
-    Event e;
     static ArrayList<Event> event = new ArrayList<>();
     static ArrayList<Event> MSAevent = new ArrayList<>();
+    static long epoch;
+    static ActionBar actionBar = null;
+
+    private TextView calenderTextView;
+    private Button clubButton, reportButton;
+    private ViewFlipper viewFlipper;
+    private CompactCalendarView compactCalendarView;
+    private ImageButton homeButton;
+
+    Event e;
     ArrayList<Event> Calendarevent = new ArrayList<>();
     List<String> startdate = new ArrayList<>();
     List<String> epochtime = new ArrayList<>();
-
-    static long epoch;
-    static ActionBar actionBar = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM-yyyy", Locale.getDefault());
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,94 +64,67 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         setContentView(R.layout.activity_main);
 
         compactCalendarView = findViewById(R.id.compactcalendar_view);
-        textView = findViewById(R.id.main_editText);
-        textView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
-        button = findViewById(R.id.main_clubButton);
+        calenderTextView = findViewById(R.id.main_editText);
+        calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        clubButton = findViewById(R.id.main_clubButton);
+        reportButton = (Button) findViewById(R.id.buttonreport);
+        homeButton = (ImageButton) findViewById(R.id.homeButton);
 
         mQueue = Volley.newRequestQueue(this);
 
-        jsonParse();
+        generalEvent();
         MSAjsonParse();
         SendEvents();
+        viewFlip();
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle(null);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
-
-        Button button = (Button) findViewById(R.id.buttonreport);
-        ImageButton homebutton = (ImageButton) findViewById(R.id.homeButton);
-
-        homebutton.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "It works", Toast.LENGTH_LONG).show();
+                toastMessage("It works");
             }
         });
-        //casting because it wants the widget instead of the view
 
-
-        button.setOnClickListener(new View.OnClickListener() {
+        reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, Report.class);
-                startActivity(intent);
-
+                eventHandleReportButton();
             }
 
         });
-
-
-        int images[] = {R.drawable.horizon, R.drawable.expression, R.drawable.horizon1, R.drawable.horizon2};
-
-        v_flip = findViewById(R.id.v_flip);
-
-        for (int i = 0; i < images.length; i++)
-            flipperImages(images[i]);
 
 
     }
 
-    public void jsonParse() {
-        String url = "https://graph.facebook.com/v3.3/me/events?access_token=EAAFYYh2QEZCQBAIfnskP0OGgpVbN0k94qudZAZCgRZA7Rd8FfuxnOgInp2YA0cvcDdBNeGWwfB1DJHhYNFwpE1IwcbCfu4A6C0ZARJ3sCYPU8yZBqQVx3X00gtxjnaZAF8JYZC5ulysOrrkfvx7mZAaCTzZAtXqXgmVWfIfa5yZBvgZCkttyLcwQDmppRIAmApXBfcjsAwZA8E5OlSQZDZD";
+    private void viewFlip() {
+        int images[] = {R.drawable.horizon, R.drawable.expression, R.drawable.horizon1, R.drawable.horizon2};
+        viewFlipper = findViewById(R.id.v_flip);
+        for (int i = 0; i < images.length; i++)
+            flipperImages(images[i]);
+    }
+
+    private void eventHandleReportButton() {
+        Intent intent = new Intent(MainActivity.this, Report.class);
+        startActivity(intent);
+    }
+
+    private void generalEvent() {
+        String url = "https://graph.facebook.com/v3.3/me/events?access_token=EAAGLQONEKZC8BAPQ8SFrDS2bUZAediZC0yfd3M98oqKAlEYdm6iHldZBo13pNgrhpzfHab6rHYjBjYxduBSxvSO4fZBvJnYUiokjDcoDLXhBnxpCRzal6l9qQjCAnJHc2p2fwmrxKbLhqt64lVK1rpwdgy3uZBy2aVdR4JfYJxegZDZD";
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String feed = jsonObject.getString("data");
-
-                            JSONArray data = new JSONArray(feed);
-                            for (int i = 0; i < data.length(); i++) {
-                                JSONObject desc = data.getJSONObject(i);
-                                String description = desc.getString("description");
-                                String endTime = desc.getString("end_time");
-                                String name = desc.getString("name");
-                                String startTime = desc.getString("start_time");
-                                e = new Event(name, description, startTime, endTime);
-
-                                Calendarevent.add(e);
-
-                                String u = "";
-                                if (event.size() != data.length()) {
-                                    event.add(e);
-                                }
-                                addEvents(name, u, startTime, endTime);
-                                startdate.add(startTime.substring(0, 10));
-
-                            }
-
-
+                            eventHandleGeneralResponse(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -160,36 +133,42 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
-
     }
 
-    public void MSAjsonParse() {
+    private void eventHandleGeneralResponse(String response) throws JSONException, ParseException {
+        JSONObject jsonObject = new JSONObject(response);
+        String feed = jsonObject.getString("data");
+
+        JSONArray data = new JSONArray(feed);
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject desc = data.getJSONObject(i);
+            String description = desc.getString("description");
+            String endTime = desc.getString("end_time");
+            String name = desc.getString("name");
+            String startTime = desc.getString("start_time");
+            e = new Event(name, description, startTime, endTime);
+
+            Calendarevent.add(e);
+
+            String u = "";
+            if (event.size() != data.length()) {
+                event.add(e);
+            }
+            addEvents(name, u, startTime, endTime);
+            startdate.add(startTime.substring(0, 10));
+        }
+    }
+
+
+    private void MSAjsonParse() {
         String url = "https://graph.facebook.com/v3.3/me/events?access_token=EAAE6FvjiUB0BALY254ZADiVYD1pPifIHkWyjSUyjuc1ytf8NJPjQRZB4CwC7I3JHjYd5jd84UOjHu2n30AcrC30buGR22gKSR3TS7ZCfilEfnFSwnWswLgBpHCXqCK13maO0s3zUsqSsSGvnzyN9WaOXwZCyoPh6CZAuv73ZAP3gZDZD";
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject ob = new JSONObject(response);
-                            String feed = ob.getString("data");
-
-                            JSONArray data = new JSONArray(feed);
-                            for (int i = 0; i < data.length(); i++) {
-                                JSONObject desc = data.getJSONObject(i);
-                                String n = desc.getString("description");
-                                String timeend = desc.getString("end_time");
-                                String name = desc.getString("name");
-                                String starttime = desc.getString("start_time");
-                                e = new Event(name, n, starttime, timeend);
-                                if (MSAevent.size() != data.length()) {
-                                    MSAevent.add(e);
-                                }
-
-
-                            }
-
+                            eventHandleMSAJsonResponse(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e1) {
@@ -202,12 +181,28 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
+    }
+
+    private void eventHandleMSAJsonResponse(String response) throws JSONException, ParseException {
+        JSONObject ob = new JSONObject(response);
+        String feed = ob.getString("data");
+        JSONArray data = new JSONArray(feed);
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject desc = data.getJSONObject(i);
+            String n = desc.getString("description");
+            String timeend = desc.getString("end_time");
+            String name = desc.getString("name");
+            String starttime = desc.getString("start_time");
+            e = new Event(name, n, starttime, timeend);
+            if (MSAevent.size() != data.length()) {
+                MSAevent.add(e);
+            }
+        }
 
     }
 
-    public void addEvents(String one, String two, String the, String fo) throws ParseException {
+    private void addEvents(String one, String two, String the, String fo) throws ParseException {
         e.setName(one);
         e.setDescription(two);
         e.setStartime(the);
@@ -215,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         formatTime(e.getStartime());
     }
 
-    public void SendEvents() {
-        button.setOnClickListener(new View.OnClickListener() {
+    private void SendEvents() {
+        clubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(MainActivity.this, ClubListPageActivity.class);
@@ -225,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
     }
 
-    public void formatTime(String y) {
+    private void formatTime(String y) {
 
         try {
             SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -247,17 +242,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                 }
                             }
                         } else {
-                            Toast.makeText(getBaseContext(), "There are no events", Toast.LENGTH_LONG).show();
+                            toastMessage("There are no events");
                         }
 
                     } catch (ParseException e1) {
                         e1.printStackTrace();
                     }
                 }
+
                 @Override
                 public void onMonthScroll(Date firstDayOfNewMonth) {
                     compactCalendarView.shouldScrollMonth(true);
-                    textView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+                    calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
                 }
             });
         } catch (ParseException e1) {
@@ -266,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     }
 
-    public String dateclicked(String date) throws ParseException {
+    private String dateclicked(String date) throws ParseException {
 
         SimpleDateFormat old = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
         Date ir = old.parse(date);
@@ -277,20 +273,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
 
-    public void flipperImages(int image) {
+    private void flipperImages(int image) {
         ImageView img = new ImageView(this);
         img.setBackgroundResource(image);
 
-        v_flip.addView(img);
-        v_flip.setFlipInterval(4000);
-        v_flip.setAutoStart(true);
-
-        v_flip.setInAnimation(this, android.R.anim.slide_in_left);
-        v_flip.setOutAnimation(this, android.R.anim.slide_out_right);
+        viewFlipper.addView(img);
+        viewFlipper.setFlipInterval(4000);
+        viewFlipper.setAutoStart(true);
+        viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
+        viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
 
-    public void showPopup(View v) {
+    private void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.settings);
@@ -299,18 +294,22 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     @Override
-
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
-                Toast.makeText(this, "Item1clicked", Toast.LENGTH_SHORT).show();
+                toastMessage("Item1clicked");
                 return true;
             case R.id.item2:
-                Toast.makeText(this, "item clicked", Toast.LENGTH_SHORT).show();
+                toastMessage("item clicked");
                 return true;
             default:
                 return false;
         }
+    }
+
+    private void toastMessage(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+
     }
 
 

@@ -1,13 +1,12 @@
 package com.example.autclub.InitialController;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.View;
 
-
-import com.example.autclub.MainActivity;
+import com.example.autclub.MainController.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
@@ -27,7 +26,7 @@ public class InstructionPage extends AppIntro {
         //preferenceHelper.putIntro("yes");
         Intent intent = new Intent(InstructionPage.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-      //  intent.putExtra("User", new User());
+        //  intent.putExtra("User", new User());
 
         startActivity(intent);
 
@@ -40,7 +39,7 @@ public class InstructionPage extends AppIntro {
         //preferenceHelper.putIntro("yes");
         Intent intent = new Intent(InstructionPage.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-       // intent.putExtra("User", new User());
+        // intent.putExtra("User", new User());
 
         startActivity(intent);
         this.finish();

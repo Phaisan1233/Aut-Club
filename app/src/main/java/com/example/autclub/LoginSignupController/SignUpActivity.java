@@ -61,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                     String timeFormat = timestamp.toString().replaceAll("[\\s:-]", "");
-                    final User user = new User(username, firstName, lastName, email,Double.parseDouble(timeFormat));
+                    final User user = new User(username, firstName, lastName, email, Double.parseDouble(timeFormat));
                     eventHandleRegisterButton(user, password);
                 }
             }

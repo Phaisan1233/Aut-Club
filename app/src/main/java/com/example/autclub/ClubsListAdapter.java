@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.autclub.ClubController.ClubPageActiviy;
+import com.example.autclub.MainController.NewsfeedActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 

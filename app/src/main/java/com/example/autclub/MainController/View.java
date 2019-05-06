@@ -1,4 +1,4 @@
-package com.example.autclub;
+package com.example.autclub.MainController;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.autclub.R;
+
 public class View extends AppCompatActivity {
-private WebView webView;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +23,10 @@ private WebView webView;
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
     }
+
     @Override
-public void onBackPressed(){
-        if(webView.canGoBack()){
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();

@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Report"></activity>
-        <activity android:name=".InitialController.InstructionPage"/>
+        <activity android:name=".MainController.Report"></activity>
+        <activity android:name=".InitialController.InstructionPage" />
         <activity android:name=".LoginSignupController.ResetPasswordActivity" />
-        <activity android:name=".MainPageActivity" />
+        <activity android:name=".MainController.MainPageActivity" />
         <activity android:name=".LoginSignupController.SignUpActivity" />
         <activity android:name=".LoginSignupController.LoginActivity" />
         <activity android:name=".InitialController.WelcomeActivity">
@@ -26,16 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainController.MainActivity" />
         <activity
-            android:name=".NewsfeedActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".MainController.NewsfeedActivity"
+            android:parentActivityName=".MainController.MainActivity" />
         <activity
-            android:name=".ClubListPageActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".ClubController.ClubListPageActivity"
+            android:parentActivityName=".MainController.MainActivity" />
         <activity
-            android:name=".ClubPageActiviy"
-            android:parentActivityName=".ClubListPageActivity"/>
+            android:name=".ClubController.ClubPageActiviy"
+            android:parentActivityName=".ClubController.ClubListPageActivity" />
     </application>
 
 </manifest>

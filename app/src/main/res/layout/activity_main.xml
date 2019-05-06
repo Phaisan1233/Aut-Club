@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="MainActivity">
+    tools:context=".MainController.MainActivity">
 
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -60,43 +60,38 @@
 
     <Button
         android:id="@+id/main.clubButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="CLUBS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintVertical_bias="0.164" />
 
     <Button
         android:id="@+id/buttonreport"
-        android:layout_width="98dp"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="288dp"
-        android:layout_marginLeft="288dp"
-        android:layout_marginTop="602dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="72dp"
         android:layout_marginBottom="8dp"
         android:text="Report"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/main.clubButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.163"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -110,36 +105,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/notificationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="63dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.188"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_notification_bell"
-        tools:ignore="VectorDrawableCompat" />
 
     <ViewFlipper
         android:id="@+id/v_flip"
@@ -160,18 +135,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.337" />
 
-    <ImageButton
-        android:id="@+id/btnSetting"
-        android:layout_width="63dp"
-        android:layout_height="71dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_setting"
+        android:text="LOGOUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

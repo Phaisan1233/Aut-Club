@@ -87,6 +87,6 @@ public class User implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", timeStamp=" + timeStamp +
-                '}'+followClub.toString();
+                '}' + followClub.toString();
     }
 }

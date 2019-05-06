@@ -9,13 +9,24 @@ import java.util.Date;
 import java.util.List;
 
 public class Event implements Parcelable {
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[0];
+        }
+    };
     private String name;
     private String description;
     private String endtime;
     private String starttime;
     private List<Event> list;
 
-    public Event(){
+    public Event() {
     }
 
     public Event(String Name, String descript, String start, String end) throws ParseException {
@@ -32,41 +43,38 @@ public class Event implements Parcelable {
         starttime = in.readString();
     }
 
-    public static final Creator<Event> CREATOR = new Creator<Event>() {
-        @Override
-        public Event createFromParcel(Parcel in) {
-            return new Event(in);
-        }
-
-        @Override
-        public Event[] newArray(int size) {
-            return new Event[0];
-        }
-    };
-
-    public void Eventlist(List<Event> arr){
-       this.list=arr;
+    public void Eventlist(List<Event> arr) {
+        this.list = arr;
     }
-    public List<Event> getEventList(){
+
+    public List<Event> getEventList() {
         return list;
 
     }
 
     public String DateFormatter(String format) throws ParseException {
-        SimpleDateFormat old=new SimpleDateFormat("yyyy-MM-dd");
-        Date ir=old.parse(format.substring(0,10));
-        SimpleDateFormat j=new SimpleDateFormat("dd-MM-yyyy");
-        String y=j.format(ir);
-        SimpleDateFormat New=new SimpleDateFormat("HH:mm:ss");
-        Date time=New.parse(format.substring(11,19));
-        SimpleDateFormat n=new SimpleDateFormat("HH:mm:ss");
-        String t=n.format(time);
-        String niceformat=y.concat(" "+t);
+        SimpleDateFormat old = new SimpleDateFormat("yyyy-MM-dd");
+        Date ir = old.parse(format.substring(0, 10));
+        SimpleDateFormat j = new SimpleDateFormat("dd-MM-yyyy");
+        String y = j.format(ir);
+        SimpleDateFormat New = new SimpleDateFormat("HH:mm:ss");
+        Date time = New.parse(format.substring(11, 19));
+        SimpleDateFormat n = new SimpleDateFormat("HH:mm:ss");
+        String t = n.format(time);
+        String niceformat = y.concat(" " + t);
         return niceformat;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEndtime() {
+        return endtime;
     }
 
     public void setEndtime(String endtime) throws ParseException {
@@ -74,34 +82,25 @@ public class Event implements Parcelable {
         this.endtime = DateFormatter(endtime);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStartime(String starttime) throws ParseException {
-        this.starttime = DateFormatter(starttime);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getEndtime() {
-        return endtime;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStartime() {
         return starttime;
     }
 
+    public void setStartime(String starttime) throws ParseException {
+        this.starttime = DateFormatter(starttime);
+    }
 
     @Override
     public String toString() {
-        return "\nEvent Name:"+this.getName()+"\n"+"Description: "+this.getDescription()+"\n"+"Start Time: "+this.getStartime()+"\n"+"End Time: "+this.getEndtime();
+        return "\nEvent Name:" + this.getName() + "\n" + "Description: " + this.getDescription() + "\n" + "Start Time: " + this.getStartime() + "\n" + "End Time: " + this.getEndtime();
     }
 
     @Override
@@ -116,41 +115,6 @@ public class Event implements Parcelable {
         dest.writeString(endtime);
         dest.writeString(starttime);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

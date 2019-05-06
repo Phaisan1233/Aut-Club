@@ -6,12 +6,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class UserTest {
     private User user;
-
-
     public UserTest() {
     }
 
@@ -39,25 +37,25 @@ public class UserTest {
         String expect = "admin";
         user.setUserName(expect);
         String result = user.getUserName();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
 
     @Test
     public void getAndSetFirstNameTest() {
-        System.out.println("find : testing get and set first clubs method");
+        System.out.println("find : testing get and set first name method");
         String expect = "Bob";
         user.setFirstName(expect);
         String result = user.getFirstName();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
 
     @Test
     public void getAndSetLastNameTest() {
-        System.out.println("find : testing get and set last clubs method");
+        System.out.println("find : testing get and set last name method");
         String expect = "jame";
         user.setLastName(expect);
         String result = user.getLastName();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -66,16 +64,16 @@ public class UserTest {
         String expect = "admin@gmail.com";
         user.setEmail(expect);
         String result = user.getEmail();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
 
     @Test
-    public void getAndSetTimeTest(){
+    public void getAndSetTimeTest() {
         System.out.println("find : testing get and set time method");
         double expect = 20190506131549.466;
         user.setTimeStamp(expect);
         double result = user.getTimeStamp();
-        assertEquals(expect,result,0);
+        assertEquals(expect, result, 0);
     }
 
 }

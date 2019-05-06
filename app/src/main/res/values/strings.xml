@@ -17,6 +17,8 @@
     <string name="last_name">Last Name</string>
     <string name="first_name">First Name</string>
     <string name="reset_password">Reset Password</string>
+    <string name="nice">Nice</string>
+    <string name="change_password">Change password</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

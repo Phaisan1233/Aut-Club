@@ -1,12 +1,13 @@
 package com.example.autclub;
 
-import org.json.JSONObject;
-
 public class Club {
     private int clubID;
     private String name;
     private int image;
     private String tokens;
+
+    public Club() {
+    }
 
     public Club(String name, int image) {
         this.name = name;
