@@ -13,10 +13,10 @@ public class User implements Serializable {
 
 
     public User(String userName, String firstName, String lastName, String email) {
-        setUserName(userName);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public User(String userName, String firstName, String lastName, String email, double timeStamp) {
@@ -26,6 +26,7 @@ public class User implements Serializable {
         setEmail(email);
         setTimeStamp(timeStamp);
     }
+
 
     public User() {
     }
@@ -69,6 +70,7 @@ public class User implements Serializable {
     public void setTimeStamp(double timeStamp) {
         this.timeStamp = timeStamp;
     }
+
 
     @Override
     public String toString() {
