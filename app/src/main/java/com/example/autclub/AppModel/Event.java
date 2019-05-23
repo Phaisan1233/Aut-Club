@@ -8,18 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Event implements Parcelable {
-    public static final Creator<Event> CREATOR = new Creator<Event>() {
-        @Override
-        public Event createFromParcel(Parcel in) {
-            return new Event(in);
-        }
-
-        @Override
-        public Event[] newArray(int size) {
-            return new Event[0];
-        }
-    };
+public class Event  {
+//    public static final Creator<Event> CREATOR = new Creator<Event>() {
+//        @Override
+//        public Event createFromParcel(Parcel in) {
+//            return new Event(in);
+//        }
+//
+//        @Override
+//        public Event[] newArray(int size) {
+//            return new Event[0];
+//        }
+//    };
     private String name;
     private String description;
     private String endtime;
@@ -103,18 +103,18 @@ public class Event implements Parcelable {
         return "\nEvent Name:" + this.getName() + "\n" + "Description: " + this.getDescription() + "\n" + "Start Time: " + this.getStartime() + "\n" + "End Time: " + this.getEndtime();
     }
 
-    @Override
-    public int describeContents() {
-        return hashCode();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(endtime);
-        dest.writeString(starttime);
-    }
+//    @Override
+//    public int describeContents() {
+//        return hashCode();
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeString(name);
+//        dest.writeString(description);
+//        dest.writeString(endtime);
+//        dest.writeString(starttime);
+//    }
 
 
 }

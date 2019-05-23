@@ -36,9 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //datebase link
     private final String loginPHP = "Login.php"; //php file
 
-    /**
-     * The Request queue.
-     */
     protected RequestQueue requestQueue;// request info form database
 
 
@@ -50,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         //set view variable
         final EditText usernameEditText = findViewById(R.id.login_etUserName);
         final EditText passwordEditText = findViewById(R.id.login_etPassword);
-        final TextView signupTextView = findViewById(R.id.login_signup);
-        final Button loginButton = findViewById(R.id.login_btnLogin);
-        final Button resetPasswordButton = findViewById(R.id.login_resetButton);
+        TextView signupTextView = findViewById(R.id.login_signup);
+        Button loginButton = findViewById(R.id.login_btnLogin);
+        Button resetPasswordButton = findViewById(R.id.login_resetButton);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
-        final Button guestuserButton = findViewById(R.id.login_btnGuest);
+        Button guestuserButton = findViewById(R.id.login_btnGuest);
 
         //Guest Button on click
         guestuserButton.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
         user.setFollowClub(clubList);
         Log.d("user", "responseHandleSuccess: " + user.toString());
-
         newActivityPage(InstructionPage.class);
     }
 

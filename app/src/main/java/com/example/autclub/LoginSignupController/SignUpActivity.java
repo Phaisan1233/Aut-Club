@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,32 +16,43 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.AppModel.User;
 import com.example.autclub.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is getting user details and saving in database
+ *
+ * @author AutClub
+ */
 public class SignUpActivity extends AppCompatActivity {
-    private final String databaseURL = "https://softwareteamproject.000webhostapp.com/";
-    private final String SignUpPHP = "Register.php";
-    protected RequestQueue requestQueue;
 
+    //Define variables
+    private final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //Database url link to connect
+    private final String SignUpPHP = "Register.php"; //PHP connect database and app
+    protected RequestQueue requestQueue; //get information from database
+    private EditText usernameEditText; //username input
+    private EditText passwordEditText;// password input
+    private EditText confirmPasswordEditText;//confirm password input
+    private EditText firstNameEditText;// first name input
+    private EditText lastNameEditText;// last name input
+    private EditText emailEditText;// email input
+    private Button registerButton;// register button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        final EditText usernameEditText = findViewById(R.id.reset_userName);
-        final EditText passwordEditText = findViewById(R.id.reset_userPassword);
-        final EditText confirmPasswordEditText = findViewById(R.id.reset_confirmpassword);
-        final EditText firstNameEditText = findViewById(R.id.signup_firstName);
-        final EditText lastNameEditText = findViewById(R.id.signup_lastName);
-        final EditText emailEditText = findViewById(R.id.signup_email);
-        final Button registerButton = findViewById(R.id.signup_btnRegister);
+        usernameEditText = findViewById(R.id.reset_userName);
+        passwordEditText = findViewById(R.id.reset_userPassword);
+        confirmPasswordEditText = findViewById(R.id.reset_confirmpassword);
+        firstNameEditText = findViewById(R.id.signup_firstName);
+        lastNameEditText = findViewById(R.id.signup_lastName);
+        emailEditText = findViewById(R.id.signup_email);
+        registerButton = findViewById(R.id.signup_btnRegister);
         requestQueue = Volley.newRequestQueue(SignUpActivity.this);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
