@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +46,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
+    private static final String TAG = "MainActivity";
     static ArrayList<Event> event = new ArrayList<>();
     static ArrayList<Event> MSAevent = new ArrayList<>();
     static long epoch;
@@ -66,8 +69,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Intent intent = getIntent();
-        //user = (User) intent.getExtras().getSerializable("User");
+        Intent intent = getIntent();
+        user = intent.getParcelableExtra("User");
+        Log.d(TAG, "onCreate: "+user.toString());
+
 
         compactCalendarView = findViewById(R.id.compactcalendar_view);
         calenderTextView = findViewById(R.id.main_editText);
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setTitle(null);
+        //actionBar.setTitle("hello worlf");
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -118,21 +123,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem notificationBell = menu.findItem(R.id.notification);
-        Button notificationButton = (Button) notificationBell.getActionView();
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newActivityPage(NotificationActivity.class);
-            }
-        });
-
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.notification:
+                Intent i = new Intent(MainActivity.this, NotificationActivity.class);
+                this.startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void viewFlip() {

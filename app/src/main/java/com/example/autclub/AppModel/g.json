@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "clubList": [
+    {
+      "clubID": "1",
+      "name": "MSA",
+      "tokens": "EAAE6FvjiUB0BALY254ZADiVYD1pPifIHkWyjSUyjuc1ytf8NJPjQRZB4CwC7I3JHjYd5jd84UOjHu2n30AcrC30buGR22gKSR3TS7ZCfilEfnFSwnWswLgBpHCXqCK13maO0s3zUsqSsSGvnzyN9WaOXwZCyoPh6CZAuv73ZAP3gZDZD",
+      "description": "The Muslim Students Association(MSA) at Auckland University of Technology (AUT) is dedicated to helping our fellow brothers and sisters.",
+      "followStatus": "0",
+      "joinStatus": "0"
+    },
+    {
+      "clubID": "2",
+      "name": "Expression",
+      "tokens": null,
+      "description": "Expression is a fun way to express yourself through dance! All styles are welcome. Join in to have fun, learn a few moves and loosen up from your hectic uni life!",
+      "followStatus": "0",
+      "joinStatus": "0"
+    },
+    {
+      "clubID": "3",
+      "name": "Horizon",
+      "tokens": null,
+      "description": "Horizon. ADP is a club from AUT who focus on creating a sense of community wihtin the AUT student body. The club provides social events, casual dance classes and opportunities for students who want to further develop themselves both in dance and in their own lives. We believe every day should be Pink Shirt Day and love our craft!",
+      "followStatus": "0",
+      "joinStatus": "0"
+    },
+    {
+      "clubID": "4",
+      "name": "STEW Women",
+      "tokens": null,
+      "description": "This group is to support and encourage women in STEM and help them develop the skills they need to do effective networking and succeed in their field of study.",
+      "followStatus": 0,
+      "joinStatus": 0
+    }
+  ]
+}

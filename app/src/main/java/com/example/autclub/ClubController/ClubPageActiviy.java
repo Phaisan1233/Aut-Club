@@ -22,12 +22,13 @@ public class ClubPageActiviy extends AppCompatActivity {
         TextView t = findViewById(R.id.Description);
         TextView clubname = findViewById(R.id.clubname);
         ImageView im = findViewById(R.id.exp_pic);
-        ;
+
         Intent in = getIntent();
         String text = in.getStringExtra("msa");
         String text2 = in.getStringExtra("exp");
         String text3 = in.getStringExtra("horizon");
         String text4 = in.getStringExtra("stem");
+
         if (text.equalsIgnoreCase("msa")) {
             String name = "AUT MSA";
             clubname.setText(name);

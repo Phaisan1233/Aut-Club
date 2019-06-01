@@ -4,11 +4,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,11 +21,18 @@ import com.example.autclub.AppModel.Club;
 import com.example.autclub.AppModel.User;
 import com.example.autclub.InitialController.InstructionPage;
 import com.example.autclub.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,85 +41,63 @@ import java.util.Map;
  * The Login activity control the login activity page.
  */
 public class LoginActivity extends AppCompatActivity {
-    private final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //datebase link
-    private final String loginPHP = "Login.php"; //php file
+    private static final String TAG = "LoginActivity";
+    private static final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //datebase link
+    private static final String loginPHP = "Login.php"; //php file
+    private static final String clubPHP = "Club.php";
 
-    protected RequestQueue requestQueue;// request info form database
+    private RequestQueue requestQueue;// request info form database
+
+    private Gson gson = new Gson();
+
+    private User user = new User();
+
+    String username;
+    String password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        EditText usernameEditText = findViewById(R.id.login_etUserName);
+        EditText passwordEditText = findViewById(R.id.login_etPassword);
+
+        username = usernameEditText.getText().toString();
+        password =  passwordEditText.getText().toString();
 
         //set view variable
-        final EditText usernameEditText = findViewById(R.id.login_etUserName);
-        final EditText passwordEditText = findViewById(R.id.login_etPassword);
-        TextView signupTextView = findViewById(R.id.login_signup);
-        Button loginButton = findViewById(R.id.login_btnLogin);
-        Button resetPasswordButton = findViewById(R.id.login_resetButton);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
-        Button guestuserButton = findViewById(R.id.login_btnGuest);
 
-        //Guest Button on click
-        guestuserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventHandleGuestButton();
-            }
-        });
-
-        //SignUp Button on click
-        signupTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventHandleSignUpTextView();
-            }
-        });
-
-        //Login Button on click
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventHandleLoginButton(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-            }
-        });
-
-        //Reset Button on click
-        resetPasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventHandleSresetPasswordButton();
-            }
-        });
     }
 
-    private void eventHandleGuestButton() {
+    public void eventHandleGuestButton(View view) {
         newActivityPage(InstructionPage.class);
     }
 
-    private void eventHandleSresetPasswordButton() {
+    public void eventHandleResetPasswordButton(View view) {
         newActivityPage(ResetPasswordActivity.class);
     }
 
-    private void eventHandleSignUpTextView() {
+    public void eventHandleSignUpTextView(View view) {
         newActivityPage(SignUpActivity.class);
     }
 
-    private void eventHandleLoginButton(String username, String password) {
+    public void eventHandleLoginButton(View view) {
+        Log.d(TAG, "eventHandleLoginButton: click");
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 eventHandleLoginButtonResponse(response);
             }
         };
-        loginRequest(username, password, responseListener);
+        loginRequest(responseListener);
     }
 
     private void eventHandleLoginButtonResponse(String response) {
         try {
-            Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
 
+            Log.d(TAG, "eventHandleLoginButtonResponse: "+response);
             JSONObject jsonObject = new JSONObject(response);
             boolean success = jsonObject.getBoolean("success");
             if (success) {
@@ -126,11 +112,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginRequest(final String username, final String password, Response.Listener<String> responseListener) {
+    private void loginRequest(Response.Listener<String> responseListener) {
         String loginRequestURL = databaseURL + loginPHP;
+        final EditText usernameEditText = findViewById(R.id.login_etUserName);
+        final EditText passwordEditText = findViewById(R.id.login_etPassword);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: user volletError");
             }
         }) {
             @Override
@@ -140,37 +129,73 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("DB_USER", "id9336220_autclubdb");
                 params.put("DB_PASSWORD", "software");
                 params.put("DB_NAME", "id9336220_autclubdb");
-                params.put("username", username);
-                params.put("password", password);
+                params.put("username", usernameEditText.getText().toString());
+                params.put("password", passwordEditText.getText().toString());
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    private void responseHandleSuccess(JSONObject jsonObject) throws JSONException {
-        String userName = jsonObject.getString("userName");
-        String firstName = jsonObject.getString("firstName");
-        String lastName = jsonObject.getString("lastName");
-        String email = jsonObject.getString("email");
-        String time = jsonObject.getString("time");
-        ArrayList<Club> clubList = new ArrayList<>();
-        JSONArray arrayClub = jsonObject.getJSONArray("club");
-        for (int i = 0; i < arrayClub.length(); i++) {
-            JSONArray jsonArray = arrayClub.getJSONArray(i);
-            String clubID = jsonArray.getString(0);
-            String clubName = jsonArray.getString(1);
-            String tokens = jsonArray.getString(2);
 
-            Log.d("user", "responseHandleSuccess: " + clubID + "|" + clubName + "|" + tokens);
-            Club club = new Club(Integer.parseInt(clubID), clubName, tokens);
-            clubList.add(club);
-        }
-        User user = new User(userName, firstName, lastName, email, Double.parseDouble(time));
-        user.setFollowClub(clubList);
-        Log.d("user", "responseHandleSuccess: " + user.toString());
-        newActivityPage(InstructionPage.class);
+    private void responseHandleSuccess(JSONObject jsonObject) {
+
+        user = gson.fromJson(jsonObject.toString(), User.class);
+        getClubListResponse();
+
+        //newActivityPage(InstructionPage.class);
     }
+
+    private void getClubListResponse() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d(TAG, "onResponse: " + response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {
+                        Type clubType = new TypeToken<ArrayList<Club>>() {}.getType();
+                        ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), clubType);
+                        user.setClubArrayList(clubList);
+                        Log.d(TAG, "onResponse: "+user.toString());
+                    } else {
+                        message("Unable to connect server", "Ok");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        clubRequest(responseListener);
+
+    }
+
+
+    private void clubRequest(Response.Listener<String> responseListener) {
+        String clubRequestURL = databaseURL + clubPHP;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, clubRequestURL, responseListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: club volletError");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("DB_HOST", "localhost");
+                params.put("DB_USER", "id9336220_autclubdb");
+                params.put("DB_PASSWORD", "software");
+                params.put("DB_NAME", "id9336220_autclubdb");
+                params.put("userID", String.valueOf(user.getUserID()));
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
 
     private void message(String message, String buttonTxt) {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(LoginActivity.this);
@@ -181,7 +206,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void newActivityPage(Class nextClass) {
         Intent intent = new Intent(LoginActivity.this, nextClass);
+        intent.putExtra("user", user);
+
         LoginActivity.this.startActivity(intent);
     }
 
+
+
 }
+
+
+

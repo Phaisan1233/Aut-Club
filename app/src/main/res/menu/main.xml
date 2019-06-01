@@ -6,6 +6,5 @@
         android:id="@+id/notification"
         android:icon="@drawable/ic_notification_bell"
         android:title="Notification"
-        app:actionViewClass="android.widget.Button"
         app:showAsAction="always" />
 </menu>

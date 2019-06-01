@@ -1,4 +1,4 @@
-package com.example.autclub.AppModel;
+package com.example.autclub.ClubController;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.autclub.ClubController.ClubPageActiviy;
+import com.example.autclub.AppModel.Club;
 import com.example.autclub.MainController.NewsfeedActivity;
 import com.example.autclub.R;
 
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.ClubsListHolder> {
-
 
     List<Club> name;
     Context context;

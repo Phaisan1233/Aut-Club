@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.example.autclub.AppModel.Club;
-import com.example.autclub.AppModel.ClubsListAdapter;
 import com.example.autclub.R;
 
 import java.util.ArrayList;

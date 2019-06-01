@@ -1,13 +1,31 @@
 package com.example.autclub.AppModel;
 
+
+import com.google.gson.annotations.SerializedName;
+
 /**
  * The Club class contain club information.
  */
-public class Club {
+public class Club  {
+    @SerializedName("clubID")
     private int clubID;
+
+    @SerializedName("name")
     private String name;
+
     private int image;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("tokens")
     private String tokens;
+
+    @SerializedName("followStatus")
+    private boolean followStatus;
+
+    @SerializedName("joinStatus")
+    private boolean joinStatus;
 
     /**
      * The constructor to create a new Club.
@@ -38,6 +56,7 @@ public class Club {
         setName(name);
         setTokens(tokens);
     }
+
 
     /**
      * Gets club id.
@@ -111,5 +130,40 @@ public class Club {
         this.tokens = tokens;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isFollowStatus() {
+        return followStatus;
+    }
+
+    public void setFollowStatus(boolean followStatus) {
+        this.followStatus = followStatus;
+    }
+
+    public boolean isJoinStatus() {
+        return joinStatus;
+    }
+
+    public void setJoinStatus(boolean joinStatus) {
+        this.joinStatus = joinStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Club{" +
+                "clubID=" + clubID +
+                ", name='" + name + '\'' +
+                ", image=" + image +
+                ", description='" + description + '\'' +
+                ", tokens='" + tokens + '\'' +
+                ", followStatus=" + followStatus +
+                ", joinStatus=" + joinStatus +
+                '}';
+    }
 }

@@ -1,19 +1,42 @@
 package com.example.autclub.AppModel;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
  * The User contain user information.
  */
-public class User implements Serializable {
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private double timeStamp;
-    private ArrayList<Club> followClub; //the list of club that user are following
+public class User implements Parcelable {
+    @SerializedName("userID")
+    private int userID;
 
+    @SerializedName("userName")
+    private String userName;
+
+    @SerializedName("firstName")
+    private String firstName;
+
+    @SerializedName("lastName")
+    private String lastName;
+
+    @SerializedName("email")
+    private String email;
+
+    @SerializedName("time")
+    private double timeStamp;
+
+    @SerializedName("club")
+    private ArrayList<Club> clubArrayList; //the list of club that user are following
+
+    /**
+     * The constructor to create a new User.
+     */
+    public User() {
+    }
 
     /**
      * The constructor to create a new User.
@@ -23,7 +46,8 @@ public class User implements Serializable {
      * @param lastName  the last name
      * @param email     the email
      */
-    public User(String userName, String firstName, String lastName, String email) {
+    public User(int userID, String userName, String firstName, String lastName, String email) {
+        this.userID = userID;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,19 +63,43 @@ public class User implements Serializable {
      * @param email     the email
      * @param timeStamp the time
      */
-    public User(String userName, String firstName, String lastName, String email, double timeStamp) {
+    public User(String userName, String firstName, String lastName, String email, double timeStamp , ArrayList clubArrayList) {
         setUserName(userName);
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setTimeStamp(timeStamp);
+        setClubArrayList(clubArrayList);
     }
 
+    protected User(Parcel in) {
+        userID = in.readInt();
+        userName = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        timeStamp = in.readDouble();
+        clubArrayList = in.readArrayList(null);
+    }
 
-    /**
-     * The constructor to create a new User.
-     */
-    public User() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     /**
@@ -149,18 +197,21 @@ public class User implements Serializable {
      *
      * @return the follow club
      */
-    public ArrayList<Club> getFollowClub() {
-        return followClub;
+    public ArrayList<Club> getClubArrayList() {
+        return clubArrayList;
     }
 
     /**
      * Sets follow club.
      *
-     * @param followClub the follow club
+     * @param clubArrayList the follow club
      */
-    public void setFollowClub(ArrayList<Club> followClub) {
-        this.followClub = followClub;
+    public void setClubArrayList(ArrayList<Club> clubArrayList) {
+        this.clubArrayList = clubArrayList;
     }
+    //SELECT c.club_ID ,c.tokens ,c.name,c.Description,f.followStatus,f.joinStatus FROM CLUB c LEFT JOIN following f on c.club_ID = f.club_ID AND f.user_ID = 23
+
+
 
     @Override
     public String toString() {
@@ -170,6 +221,23 @@ public class User implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", timeStamp=" + timeStamp +
-                '}' + followClub.toString();
+                ", clubArrayList=" + clubArrayList.toString() +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(userID);
+        dest.writeString(userName);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(email);
+        dest.writeDouble(timeStamp);
+        dest.writeList(clubArrayList);
     }
 }

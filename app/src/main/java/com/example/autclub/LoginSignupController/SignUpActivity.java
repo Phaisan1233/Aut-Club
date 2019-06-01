@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,8 +17,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.AppModel.User;
 import com.example.autclub.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,13 +74,19 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                     String timeFormat = timestamp.toString().replaceAll("[\\s:-]", "");
-                    final User user = new User(username, firstName, lastName, email, Double.parseDouble(timeFormat));
-                    eventHandleRegisterButton(user, password);
+                    //final User user = new User(username, firstName, lastName, email);
+                   // eventHandleRegisterButton(user, password);
                 }
             }
         });
     }
 
+    /**
+     * This method handle when signup button is pressed
+     *
+     * @param user user's infomation
+     * @param password user's password
+     */
     private void eventHandleRegisterButton(User user, String password) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -88,6 +97,11 @@ public class SignUpActivity extends AppCompatActivity {
         signUpRequest(user, password, responseListener);
     }
 
+    /**
+     * This method is response with sign uo
+     *
+     * @param response
+     */
     private void eventHandleRegisterButtonResponse(String response) {
         try {
             JSONObject jsonResponse = new JSONObject(response);
@@ -103,18 +117,28 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is response when sign up success
+     *
+     * @param response
+     */
     private void responseHandleSuccess(String response) {
         Log.d("user", "onResponse: " + response + "\n------------------------------------------------------------");
         message("Sign up successful", "OK");
         newActivityPage(LoginActivity.class);
     }
 
+    /**
+     * This method is pass variable to php in database
+     *
+     * @param user     user's infomation
+     * @param password user's password
+     */
     private void signUpRequest(final User user, final String password, Response.Listener<String> responseListener) {
         String loginRequestURL = databaseURL + SignUpPHP;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         }) {
             @Override
@@ -136,6 +160,12 @@ public class SignUpActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * This method is show the pop up message
+     *
+     * @param message   that want to show
+     * @param buttonTxt message for the button
+     */
     private void message(String message, String buttonTxt) {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(SignUpActivity.this);
         alertdialog.setMessage(message);
@@ -143,6 +173,9 @@ public class SignUpActivity extends AppCompatActivity {
         alertdialog.show();
     }
 
+    /**
+     * This method is open new page
+     */
     private void newActivityPage(Class nextClass) {
         Intent intent = new Intent(SignUpActivity.this, nextClass);
         SignUpActivity.this.startActivity(intent);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import com.example.autclub.AppModel.User;
@@ -11,13 +12,15 @@ import com.example.autclub.MainController.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
-    private User user;
+    private User user = new User();
+    private static final String TAG = "InstructionPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Intent intent = getIntent();
-        //user = (User) intent.getExtras().getSerializable("User");
+        Intent intent = getIntent();
+        //user = intent.getParcelableExtra("User");
+        //Log.d(TAG, "onCreate: "+user.toString());
         addSlide(new Instruction1());
         addSlide(new Instruction2());
         addSlide(new Instruction3());
