@@ -32,6 +32,7 @@ import com.example.autclub.InitialController.WelcomeActivity;
 import com.example.autclub.LoginSignupController.LoginActivity;
 import com.example.autclub.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,15 +64,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private ImageButton homeButton;
     private MenuItem notificationBell;
     private RequestQueue mQueue;
-    private User user;
+    private User user = new User();
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gson = new Gson();
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("user");
-        Log.d(TAG, "onCreate: "+user.toString());
+        user = gson.fromJson(intent.getStringExtra("user"),User.class);
+        Log.d(TAG, "onCreate: "+intent.getStringExtra("user"));
 
 
         compactCalendarView = findViewById(R.id.compactcalendar_view);
@@ -356,7 +359,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     private void newActivityPage(Class nextClass) {
         Intent intent = new Intent(MainActivity.this, nextClass);
+        String json = gson.toJson(user);
+        intent.putExtra("user", json);
+        Log.d(TAG, "newActivityPage: "+json);
         MainActivity.this.startActivity(intent);
+    }
+
+    public void eventHandleChatButton(View view) {
+        newActivityPage(ChatActivity.class);
     }
 }
 

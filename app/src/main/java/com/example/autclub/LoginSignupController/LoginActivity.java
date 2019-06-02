@@ -2,21 +2,16 @@ package com.example.autclub.LoginSignupController;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.AppModel.Club;
@@ -24,11 +19,6 @@ import com.example.autclub.AppModel.User;
 import com.example.autclub.InitialController.InstructionPage;
 import com.example.autclub.R;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
@@ -49,10 +39,11 @@ public class LoginActivity extends AppCompatActivity {
     private static final String loginPHP = "Login.php"; //php file
     private static final String clubPHP = "Club.php";
 
+    private Handler mHandler = new Handler();
+    private String databaseResponse;
     private RequestQueue requestQueue;// request info form database
 
     private Gson gson;
-    private User user;
 
 
     @Override
@@ -66,9 +57,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void eventHandleGuestButton(View view) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        user = new User(2,"Guest",timestamp.toString());
         getClubListResponse();
+
     }
 
     public void eventHandleResetPasswordButton(View view) {
@@ -86,17 +76,18 @@ public class LoginActivity extends AppCompatActivity {
                 eventHandleLoginButtonResponse(response);
             }
         };
-        loginRequest(responseListener);
+        loginRequest(responseListener, loginPHP);
     }
 
     private void eventHandleLoginButtonResponse(String response) {
         try {
-            Log.d(TAG, "eventHandleLoginButtonResponse: "+response);
+
+            Log.d(TAG, "eventHandleLoginButtonResponse: " + response);
             JSONObject jsonObject = new JSONObject(response);
             boolean success = jsonObject.getBoolean("success");
             if (success) {
-                user = gson.fromJson(jsonObject.toString(), User.class);
-                getClubListResponse();
+                databaseResponse = response;
+                newActivityPage(InstructionPage.class);
             } else {
                 message("Login Failed", "Retry");
             }
@@ -107,16 +98,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginRequest(Response.Listener<String> responseListener) {
-        String loginRequestURL = databaseURL + loginPHP;
+    private void loginRequest(Response.Listener<String> responseListener, String php) {
         final EditText usernameEditText = findViewById(R.id.login_etUserName);
         final EditText passwordEditText = findViewById(R.id.login_etPassword);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginRequestURL, responseListener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: user volletError");
-            }
-        }) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, databaseURL + php, responseListener, null) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
@@ -126,6 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("DB_NAME", "id9336220_autclubdb");
                 params.put("username", usernameEditText.getText().toString());
                 params.put("password", passwordEditText.getText().toString());
+                params.put("userID", "0");
+
                 return params;
             }
         };
@@ -137,15 +124,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d(TAG, "eventHandleLoginButtonResponse: " + response);
                     JSONObject jsonObject = new JSONObject(response);
                     boolean success = jsonObject.getBoolean("success");
                     if (success) {
-                        Type clubType = new TypeToken<ArrayList<Club>>() {}.getType();
-                        ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), clubType);
-                        user.setClubArrayList(clubList);
-                        Log.d(TAG, "getClubListResponse: "+user.toString());
-                    } else {
-                        message("Unable to connect server", "Ok");
+                        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                        Type type = new TypeToken<ArrayList<Club>>() {
+                        }.getType();
+                        ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), type);
+                        User user = new User(0, "Guest User","","","",timestamp.toString(),clubList);
+                        databaseResponse = gson.toJson(user);
+                        newActivityPage(InstructionPage.class);
+
                     }
 
                 } catch (JSONException e) {
@@ -154,34 +144,18 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         };
-        clubRequest(responseListener);
-        newActivityPage(InstructionPage.class);
-
+        loginRequest(responseListener, clubPHP);
     }
 
 
-    private void clubRequest(Response.Listener<String> responseListener) {
-        String clubRequestURL = databaseURL + clubPHP;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, clubRequestURL, responseListener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: club volletError");
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("DB_HOST", "localhost");
-                params.put("DB_USER", "id9336220_autclubdb");
-                params.put("DB_PASSWORD", "software");
-                params.put("DB_NAME", "id9336220_autclubdb");
-                params.put("userID", String.valueOf(user.getUserID()));
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
+    private Runnable mToastRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mHandler.postDelayed(this, 5000);
+            mHandler.removeCallbacks(mToastRunnable);
 
+        }
+    };
 
     private void message(String message, String buttonTxt) {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(LoginActivity.this);
@@ -191,8 +165,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void newActivityPage(Class nextClass) {
+        mToastRunnable.run();
         Intent intent = new Intent(LoginActivity.this, nextClass);
-        intent.putExtra("user", user);
+        Log.d(TAG, "newActivityPage: " + databaseResponse);
+        intent.putExtra("user", databaseResponse);
         LoginActivity.this.startActivity(intent);
     }
 

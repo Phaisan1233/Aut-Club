@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText firstNameEditText;// first name input
     private EditText lastNameEditText;// last name input
     private EditText emailEditText;// email input
-    private Button registerButton;// register button
+    private Button signUpButton;// sign up button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +55,10 @@ public class SignUpActivity extends AppCompatActivity {
         firstNameEditText = findViewById(R.id.signup_firstName);
         lastNameEditText = findViewById(R.id.signup_lastName);
         emailEditText = findViewById(R.id.signup_email);
-        registerButton = findViewById(R.id.signup_btnRegister);
+        signUpButton = findViewById(R.id.signup_btnSignUp);
         requestQueue = Volley.newRequestQueue(SignUpActivity.this);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String firstName = firstNameEditText.getText().toString();
@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                     User user = new User(username, firstName, lastName, email,timestamp.toString());
-                    eventHandleRegisterButton(user, password);
+                    eventHandleSignUpButtonButton(user, password);
                 }
             }
         });
@@ -86,11 +86,11 @@ public class SignUpActivity extends AppCompatActivity {
      * @param user user's infomation
      * @param password user's password
      */
-    private void eventHandleRegisterButton(User user, String password) {
+    private void eventHandleSignUpButtonButton(User user, String password) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                eventHandleRegisterButtonResponse(response);
+                eventHandleSignUpButtonResponse(response);
             }
         };
         signUpRequest(user, password, responseListener);
@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
      *
      * @param response
      */
-    private void eventHandleRegisterButtonResponse(String response) {
+    private void eventHandleSignUpButtonResponse(String response) {
         try {
             JSONObject jsonResponse = new JSONObject(response);
             boolean success;
@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (success) {
                 responseHandleSuccess(response);
             } else {
-                message("Register Failed: \n       username already existed", "Retry");
+                message("Sign up Failed: \n       username already existed", "Retry");
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * The User contain user information.
  */
-public class User implements Parcelable {
+public class User  {
     @SerializedName("userID")
     private int userID;
 
@@ -29,7 +29,7 @@ public class User implements Parcelable {
     @SerializedName("time")
     private double timeStamp;
 
-    @SerializedName("club")
+    @SerializedName("clubList")
     private ArrayList<Club> clubArrayList; //the list of club that user are following
 
     /**
@@ -38,14 +38,14 @@ public class User implements Parcelable {
     public User() {
     }
 
-    public User(int userID, String firstName, String timeStamp) {
+    public User(int userID, String firstName, String timeStamp,ArrayList clubArrayList) {
         setUserID(userID);
         setUserName(null);
         setFirstName(firstName);
         setLastName(null);
         setEmail(null);
         setTimeStamp(timeStamp);
-        setClubArrayList(null);
+        setClubArrayList(clubArrayList);
     }
 
     /**
@@ -84,27 +84,6 @@ public class User implements Parcelable {
         setClubArrayList(clubArrayList);
     }
 
-    protected User(Parcel in) {
-        userID = in.readInt();
-        userName = in.readString();
-        firstName = in.readString();
-        lastName = in.readString();
-        email = in.readString();
-        timeStamp = in.readDouble();
-        clubArrayList = in.readArrayList(null);
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 
     public User(String username, String firstName, String lastName, String email,String timeStamp) {
         setUserName(username);
@@ -245,19 +224,5 @@ public class User implements Parcelable {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(userID);
-        dest.writeString(userName);
-        dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeString(email);
-        dest.writeDouble(timeStamp);
-        dest.writeList(clubArrayList);
-    }
 }

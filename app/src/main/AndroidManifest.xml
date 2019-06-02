@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.autclub">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity android:name=".MainController.Report" />
         <activity android:name=".InitialController.InstructionPage" />
         <activity android:name=".LoginSignupController.ResetPasswordActivity" />
@@ -39,7 +38,9 @@
             android:parentActivityName=".ClubController.ClubListPageActivity" />
         <activity
             android:name=".MainController.ViewActivity"
-            android:parentActivityName=".ClubController.ClubListPageActivity"></activity>
+            android:parentActivityName=".ClubController.ClubListPageActivity" />
+        <activity
+            android:name=".MainController.ChatActivity"/>
     </application>
 
 </manifest>

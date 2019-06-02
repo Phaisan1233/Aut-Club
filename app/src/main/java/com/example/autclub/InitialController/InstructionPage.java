@@ -12,15 +12,17 @@ import com.example.autclub.MainController.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
-    private User user;
     private static final String TAG = "InstructionPage";
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("user");
-        Log.d(TAG, "onCreate: "+user.toString());
+
+        user = intent.getStringExtra("user");
+        Log.d(TAG, "onCreate: "+user);
+
         addSlide(new Instruction1());
         addSlide(new Instruction2());
         addSlide(new Instruction3());
