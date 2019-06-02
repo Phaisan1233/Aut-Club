@@ -12,15 +12,15 @@ import com.example.autclub.MainController.MainActivity;
 import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
-    private User user = new User();
+    private User user;
     private static final String TAG = "InstructionPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        //user = intent.getParcelableExtra("User");
-        //Log.d(TAG, "onCreate: "+user.toString());
+        user = intent.getParcelableExtra("user");
+        Log.d(TAG, "onCreate: "+user.toString());
         addSlide(new Instruction1());
         addSlide(new Instruction2());
         addSlide(new Instruction3());
@@ -67,7 +67,7 @@ public class InstructionPage extends AppIntro {
     public void startNewPage() {
         Intent intent = new Intent(InstructionPage.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.putExtra("User", new User());
+        intent.putExtra("user", user);
         InstructionPage.this.startActivity(intent);
     }
 

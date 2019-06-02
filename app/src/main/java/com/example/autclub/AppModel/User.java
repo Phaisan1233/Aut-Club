@@ -38,6 +38,16 @@ public class User implements Parcelable {
     public User() {
     }
 
+    public User(int userID, String firstName, String timeStamp) {
+        setUserID(userID);
+        setUserName(null);
+        setFirstName(firstName);
+        setLastName(null);
+        setEmail(null);
+        setTimeStamp(timeStamp);
+        setClubArrayList(null);
+    }
+
     /**
      * The constructor to create a new User.
      *
@@ -46,12 +56,13 @@ public class User implements Parcelable {
      * @param lastName  the last name
      * @param email     the email
      */
-    public User(int userID, String userName, String firstName, String lastName, String email) {
-        this.userID = userID;
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User(int userID,String userName, String firstName, String lastName, String email, String timeStamp ) {
+        setUserID(userID);
+        setUserName(userName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setTimeStamp(timeStamp);
     }
 
     /**
@@ -63,7 +74,8 @@ public class User implements Parcelable {
      * @param email     the email
      * @param timeStamp the time
      */
-    public User(String userName, String firstName, String lastName, String email, double timeStamp , ArrayList clubArrayList) {
+    public User(int userID,String userName, String firstName, String lastName, String email, String timeStamp , ArrayList clubArrayList) {
+        setUserID(userID);
         setUserName(userName);
         setFirstName(firstName);
         setLastName(lastName);
@@ -188,8 +200,8 @@ public class User implements Parcelable {
      *
      * @param timeStamp the time stamp
      */
-    public void setTimeStamp(double timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = Double.parseDouble(timeStamp.replaceAll("[^0-9]+", "").substring(0,14));
     }
 
     /**
@@ -221,7 +233,7 @@ public class User implements Parcelable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", timeStamp=" + timeStamp +
-                ", clubArrayList=" + clubArrayList.toString() +
+                ", clubArrayList=" + clubArrayList +
                 '}';
     }
 

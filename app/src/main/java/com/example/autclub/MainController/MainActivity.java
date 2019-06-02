@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User");
+        user = intent.getParcelableExtra("user");
         Log.d(TAG, "onCreate: "+user.toString());
 
 
