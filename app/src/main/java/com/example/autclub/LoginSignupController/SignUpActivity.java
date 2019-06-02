@@ -73,9 +73,8 @@ public class SignUpActivity extends AppCompatActivity {
                     message("Please enter a valid email address ", "OK");
                 } else {
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    String timeFormat = timestamp.toString().replaceAll("[\\s:-]", "");
-                    //final User user = new User(username, firstName, lastName, email);
-                   // eventHandleRegisterButton(user, password);
+                    User user = new User(username, firstName, lastName, email,timestamp.toString());
+                    eventHandleRegisterButton(user, password);
                 }
             }
         });

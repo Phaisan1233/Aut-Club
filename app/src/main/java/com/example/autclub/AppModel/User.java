@@ -106,6 +106,14 @@ public class User implements Parcelable {
         }
     };
 
+    public User(String username, String firstName, String lastName, String email,String timeStamp) {
+        setUserName(username);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setTimeStamp(timeStamp);
+    }
+
     public int getUserID() {
         return userID;
     }

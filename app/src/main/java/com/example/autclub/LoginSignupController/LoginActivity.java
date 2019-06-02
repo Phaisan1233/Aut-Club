@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     public void eventHandleGuestButton(View view) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user = new User(2,"Guest",timestamp.toString());
-        newActivityPage(InstructionPage.class);
+        getClubListResponse();
     }
 
     public void eventHandleResetPasswordButton(View view) {
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean success = jsonObject.getBoolean("success");
             if (success) {
                 user = gson.fromJson(jsonObject.toString(), User.class);
-                newActivityPage(InstructionPage.class);
+                getClubListResponse();
             } else {
                 message("Login Failed", "Retry");
             }
@@ -132,54 +132,55 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-//    private void getClubListResponse() {
-//        Response.Listener<String> responseListener = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    boolean success = jsonObject.getBoolean("success");
-//                    if (success) {
-//                        Type clubType = new TypeToken<ArrayList<Club>>() {}.getType();
-//                        ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), clubType);
-//                        user.setClubArrayList(clubList);
-//                        Log.d(TAG, "getClubListResponse: "+user.toString());
-//                    } else {
-//                        message("Unable to connect server", "Ok");
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        };
-//        clubRequest(responseListener);
-//
-//    }
+    private void getClubListResponse() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {
+                        Type clubType = new TypeToken<ArrayList<Club>>() {}.getType();
+                        ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), clubType);
+                        user.setClubArrayList(clubList);
+                        Log.d(TAG, "getClubListResponse: "+user.toString());
+                    } else {
+                        message("Unable to connect server", "Ok");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        clubRequest(responseListener);
+        newActivityPage(InstructionPage.class);
+
+    }
 
 
-//    private void clubRequest(Response.Listener<String> responseListener) {
-//        String clubRequestURL = databaseURL + clubPHP;
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, clubRequestURL, responseListener, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d(TAG, "onErrorResponse: club volletError");
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("DB_HOST", "localhost");
-//                params.put("DB_USER", "id9336220_autclubdb");
-//                params.put("DB_PASSWORD", "software");
-//                params.put("DB_NAME", "id9336220_autclubdb");
-//                params.put("userID", String.valueOf(user.getUserID()));
-//                return params;
-//            }
-//        };
-//        requestQueue.add(stringRequest);
-//    }
+    private void clubRequest(Response.Listener<String> responseListener) {
+        String clubRequestURL = databaseURL + clubPHP;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, clubRequestURL, responseListener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: club volletError");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("DB_HOST", "localhost");
+                params.put("DB_USER", "id9336220_autclubdb");
+                params.put("DB_PASSWORD", "software");
+                params.put("DB_NAME", "id9336220_autclubdb");
+                params.put("userID", String.valueOf(user.getUserID()));
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
 
 
     private void message(String message, String buttonTxt) {
