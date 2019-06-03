@@ -34,7 +34,6 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter messageAdapter;
     private ListView messagesView;
     private User user;
-    private Gson gson;
     private RequestQueue mRequestQueue;
     private boolean exit = true;
 
@@ -42,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        gson = new Gson();
+        Gson gson = new Gson();
         Intent intent = getIntent();
         user = gson.fromJson(intent.getStringExtra("user"), User.class);
         Log.d(TAG, "onCreate: " + user.toString());

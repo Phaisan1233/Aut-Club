@@ -26,7 +26,6 @@ public class User  {
     @SerializedName("email")
     private String email;
 
-    @SerializedName("time")
     private double timeStamp;
 
     @SerializedName("clubList")
@@ -187,6 +186,7 @@ public class User  {
      *
      * @param timeStamp the time stamp
      */
+    @SerializedName("time")
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = Double.parseDouble(timeStamp.replaceAll("[^0-9]+", "").substring(0,14));
     }
