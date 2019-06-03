@@ -11,24 +11,13 @@ import java.util.ArrayList;
  * The User contain user information.
  */
 public class User  {
-    @SerializedName("userID")
     private int userID;
-
-    @SerializedName("userName")
     private String userName;
-
-    @SerializedName("firstName")
     private String firstName;
-
-    @SerializedName("lastName")
     private String lastName;
-
-    @SerializedName("email")
     private String email;
 
     private double timeStamp;
-
-    @SerializedName("clubList")
     private ArrayList<Club> clubArrayList; //the list of club that user are following
 
     /**
@@ -96,6 +85,7 @@ public class User  {
         return userID;
     }
 
+    @SerializedName("userID")
     public void setUserID(int userID) {
         this.userID = userID;
     }
@@ -114,6 +104,7 @@ public class User  {
      *
      * @param userName the user name
      */
+    @SerializedName("userName")
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -132,6 +123,7 @@ public class User  {
      *
      * @param firstName the first name
      */
+    @SerializedName("firstName")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -150,6 +142,7 @@ public class User  {
      *
      * @param lastName the last name
      */
+    @SerializedName("lastName")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -168,6 +161,7 @@ public class User  {
      *
      * @param email the email
      */
+    @SerializedName("email")
     public void setEmail(String email) {
         this.email = email;
     }
@@ -205,12 +199,10 @@ public class User  {
      *
      * @param clubArrayList the follow club
      */
+    @SerializedName("clubList")
     public void setClubArrayList(ArrayList<Club> clubArrayList) {
         this.clubArrayList = clubArrayList;
     }
-    //SELECT c.club_ID ,c.tokens ,c.name,c.Description,f.followStatus,f.joinStatus FROM CLUB c LEFT JOIN following f on c.club_ID = f.club_ID AND f.user_ID = 23
-
-
 
     @Override
     public String toString() {

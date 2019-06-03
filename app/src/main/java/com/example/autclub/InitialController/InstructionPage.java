@@ -13,15 +13,15 @@ import com.github.paolorotolo.appintro.AppIntro;
 
 public class InstructionPage extends AppIntro {
     private static final String TAG = "InstructionPage";
-    private String user;
+    private String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
 
-        user = intent.getStringExtra("user");
-        Log.d(TAG, "onCreate: "+user);
+        value = intent.getStringExtra("value");
+        Log.d(TAG, "onCreate: "+value);
 
         addSlide(new Instruction1());
         addSlide(new Instruction2());
@@ -69,7 +69,7 @@ public class InstructionPage extends AppIntro {
     public void startNewPage() {
         Intent intent = new Intent(InstructionPage.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("user", user);
+        intent.putExtra("user", value);
         InstructionPage.this.startActivity(intent);
     }
 

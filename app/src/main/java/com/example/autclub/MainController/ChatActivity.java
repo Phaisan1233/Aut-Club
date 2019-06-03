@@ -16,9 +16,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.autclub.AppModel.Message;
+import com.example.autclub.AppModel.ThreadConnectDatabase;
 import com.example.autclub.AppModel.User;
+import com.example.autclub.AppModel.VolleyResponseListener;
 import com.example.autclub.R;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,12 +33,18 @@ import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
+    private static final String chatPHP = "Chat.php"; //php file
+    private static final String insertMessagePHP = "InsertMessage.php";
+
+
     private EditText editText;
     private ChatAdapter messageAdapter;
     private ListView messagesView;
     private User user;
-    private RequestQueue mRequestQueue;
+    private RequestQueue requestQueue;
     private boolean exit = true;
+
+    private ThreadConnectDatabase thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,42 +61,46 @@ public class ChatActivity extends AppCompatActivity {
         messagesView = (ListView) findViewById(R.id.messages_view);
         messagesView.setAdapter(messageAdapter);
 
-        mRequestQueue = Volley.newRequestQueue(this);
-        ExampleThread thread = new ExampleThread();
-        thread.start();
-        //parseJSON();
+        requestQueue = Volley.newRequestQueue(this);
 
+        thread = new ThreadConnectDatabase(requestQueue, null, chatPHP,new VolleyResponseListener() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    eventHandleResponse(new JSONObject(response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.setSleepTime(1500);
+        thread.start();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        exit = false;
+        thread.stopThread();
     }
 
     public void sendMessage(View view) {
         final String message = editText.getText().toString();
         if (message.length() > 0) {
-            String url = "https://softwareteamproject.000webhostapp.com/InsertMessage.php";
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            Map<String, String> params = new HashMap<>();
+            params.put("DB_HOST", "localhost");
+            params.put("DB_USER", "id9336220_autclubdb");
+            params.put("DB_PASSWORD", "software");
+            params.put("DB_NAME", "id9336220_autclubdb");
+            params.put("userID", String.valueOf(user.getUserID()));
+            params.put("message", message);
+
+            thread = new ThreadConnectDatabase(requestQueue, params,insertMessagePHP, new VolleyResponseListener() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d(TAG, "onResponse: " + response);
                 }
-            }, null) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("DB_HOST", "localhost");
-                    params.put("DB_USER", "id9336220_autclubdb");
-                    params.put("DB_PASSWORD", "software");
-                    params.put("DB_NAME", "id9336220_autclubdb");
-                    params.put("userID", String.valueOf(user.getUserID()));
-                    params.put("message", message);
-                    return params;
-                }
-            };
-            mRequestQueue.add(stringRequest);
+            });
+            thread.stopThread();
+            thread.start();
             editText.getText().clear();
         }
     }
@@ -111,6 +124,10 @@ public class ChatActivity extends AppCompatActivity {
         return sb.toString().substring(0, 7);
     }
 
+
+
+
+
     private void parseJSON() {
         String url = "https://softwareteamproject.000webhostapp.com/Chat.php";
 
@@ -122,19 +139,7 @@ public class ChatActivity extends AppCompatActivity {
                             boolean success = response.getBoolean("success");
 
                             if (success) {
-                                JSONArray jsonArray = response.getJSONArray("chatList");
-
-                                for (int i = messageAdapter.getCount(); i < jsonArray.length(); i++) {
-                                    JSONObject chatList = jsonArray.getJSONObject(i);
-
-                                    int userID = chatList.getInt("userID");
-                                    String name = chatList.getString("name");
-                                    String message = chatList.getString("message");
-
-                                    Message m = new Message(message, name, (userID == user.getUserID()), getRandomColor());
-                                    messageAdapter.add(m);
-                                    messagesView.setSelection(messagesView.getCount() - 1);
-                                }
+                                eventHandleResponse(response);
                             } else {
 
                             }
@@ -149,7 +154,30 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        mRequestQueue.add(request);
+        requestQueue.add(request);
+    }
+
+    private void eventHandleResponse(JSONObject jsonObject) throws JSONException {
+        boolean success = jsonObject.getBoolean("success");
+
+        if (success) {
+            JSONArray jsonArray = jsonObject.getJSONArray("chatList");
+
+            for (int i = messageAdapter.getCount(); i < jsonArray.length(); i++) {
+                JSONObject chatList = jsonArray.getJSONObject(i);
+
+                int userID = chatList.getInt("userID");
+                String name = chatList.getString("name");
+                String message = chatList.getString("message");
+
+                Message m = new Message(message, name, (userID == user.getUserID()), getRandomColor());
+                messageAdapter.add(m);
+                messagesView.setSelection(messagesView.getCount() - 1);
+            }
+        } else {
+
+        }
+
     }
 
 
