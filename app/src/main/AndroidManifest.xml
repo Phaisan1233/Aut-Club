@@ -20,20 +20,11 @@
         <activity android:name=".MainController.JoinRequest" />
         <activity android:name=".MainController.instructions_actionbar" />
         <activity android:name=".MainController.MainActivity" />
-        <activity
-            android:name=".MainController.NewsfeedActivity"
-            android:parentActivityName=".MainController.MainActivity" />
-        <activity
-            android:name=".ClubController.ClubListPageActivity"
-            android:parentActivityName=".MainController.MainActivity" />
-        <activity
-            android:name=".ClubController.ClubPageActiviy"
-            android:parentActivityName=".ClubController.ClubListPageActivity" />
-        <activity
-            android:name=".MainController.ViewActivity"
-            android:parentActivityName=".ClubController.ClubListPageActivity" />
+        <activity android:name=".MainController.NewsfeedActivity" />
+        <activity android:name=".ClubController.ClubListPageActivity" />
+        <activity android:name=".ClubController.ClubPageActiviy" />
+
         <activity android:name=".MainController.ChatActivity" />
-        <activity android:name=".MainController.Report" />
         <activity android:name=".InitialController.InstructionPage" />
         <activity android:name=".LoginSignupController.ResetPasswordActivity" />
         <activity android:name=".MainController.NotificationActivity" />
