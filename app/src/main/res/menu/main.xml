@@ -5,6 +5,7 @@
     <item
         android:id="@+id/notification"
         android:icon="@drawable/ic_notification_bell"
+
         android:title="Notification"
         app:showAsAction="always" />
     <item

@@ -73,7 +73,7 @@ public class UserTest {
     @Test
     public void getAndSetTimeTest() {
         System.out.println("find : testing get and set time method");
-        double expect = 20190506131549.466;
+        String expect = "20190506131549.466";
         user.setTimeStamp(expect);
         double result = user.getTimeStamp();
         assertEquals(expect, result, 0);
