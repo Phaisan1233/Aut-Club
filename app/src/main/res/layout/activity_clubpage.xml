@@ -79,6 +79,7 @@
         android:text="JOIN"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:onClick="eventHandleJoinButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

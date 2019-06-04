@@ -1,139 +1,143 @@
 package com.example.autclub.ClubController;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import com.example.autclub.AppModel.Club;
-import com.example.autclub.MainController.NewsfeedActivity;
 import com.example.autclub.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.ClubsListHolder> {
+public class ClubsListAdapter extends RecyclerView.Adapter<ClubsListAdapter.ClubsListHolder> implements Filterable {
 
-    List<Club> name;
-    Context context;
-    List<String> nametag;
+    private ArrayList<Club> clubList;
+    private ArrayList<Club> clubListFull;
+    private OnItemClickListener listener;
 
-    public ClubsListAdapter(Context context, List<Club> name, List<String> nametag) {
-        this.context = context;
-        this.name = name;
-        this.nametag = nametag;
+    public ArrayList<Club> getClubList() {
+        return clubList;
+    }
+
+    public interface OnItemClickListener {
+        void onFollowClick(int position,ArrayList<Club> clubList);
+
+        void onImageClick(int position,ArrayList<Club> clubList);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public ClubsListAdapter(ArrayList<Club> clubList) {
+        clubList.get(0).setImage(R.drawable.msa);
+        clubList.get(1).setImage(R.drawable.expression);
+        clubList.get(2).setImage(R.drawable.horizon);
+        clubList.get(3).setImage(R.drawable.stemwomen);
+        this.clubList = clubList;
+        clubListFull = new ArrayList<>(clubList);
     }
 
     public ClubsListHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.image, viewGroup, false);
-        ClubsListHolder clubs = new ClubsListHolder(view, context, this.name);
-        return clubs;
+        return new ClubsListHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ClubsListHolder viewHolder, int i) {
-        int imageid = name.get(i).getImage();
-        viewHolder.clubimages.setImageResource(imageid);
-        viewHolder.clubimages.setTag(nametag.get(i));
-        viewHolder.FollowClubs.setText("FOLLOW " + name.get(i).getName());
+        Club club = clubList.get(i);
+        viewHolder.clubimages.setImageResource(club.getImage());
+        String followStatus = "FOLLOW ";
+        if (club.isFollowStatus()) {
+            followStatus = "FOLLOWING ";
+
+        }
+        viewHolder.followClubs.setText(followStatus + club.getName());
     }
 
     @Override
     public int getItemCount() {
-        return name.size();
+        return clubList.size();
     }
 
-    public void SearchClubs(List<Club> newList) {
-        name = new ArrayList<>();
-        name.addAll(newList);
-        notifyDataSetChanged();
+
+    @Override
+    public Filter getFilter() {
+        return filter;
     }
 
-    public static class ClubsListHolder extends RecyclerView.ViewHolder {
-        final Context context;
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Club> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(clubListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Club club : clubListFull) {
+                    if (club.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(club);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            clubList.clear();
+            clubList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    public class ClubsListHolder extends RecyclerView.ViewHolder {
         ImageView clubimages;
-        Button FollowClubs;
-        List<Club> name;
+        Button followClubs;
 
-        public ClubsListHolder(@NonNull View itemView, final Context context, List<Club> name) {
+        public ClubsListHolder(@NonNull View itemView) {
             super(itemView);
-
             clubimages = itemView.findViewById(R.id.msa1);
-            FollowClubs = itemView.findViewById(R.id.image1_title);
+            followClubs = itemView.findViewById(R.id.image1_title);
+
+            followClubs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            clubList.get(position).setChangeFollowStatus();
+                            ArrayList<Club> clubs = clubList;
+                            listener.onFollowClick(position,clubs);
+                            notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
 
             clubimages.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(context, ClubPageActiviy.class);
-                    if (clubimages.getTag().equals("msa")) {
-                        intent1.putExtra("msa", "MSA");
-                        intent1.putExtra("exp", "not");
-                        intent1.putExtra("horizon", "NO");
-                        intent1.putExtra("stem", "NO");
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            ArrayList<Club> clubs = clubList;
+                            listener.onImageClick(position,clubs);
+                        }
                     }
-                    if (clubimages.getTag().equals("expression")) {
-                        intent1.putExtra("exp", "exp");
-                        intent1.putExtra("msa", "not");
-                        intent1.putExtra("horizon", "NO");
-                        intent1.putExtra("stem", "NO");
-                    }
-                    if (clubimages.getTag().equals("horizon")) {
-                        intent1.putExtra("exp", "no");
-                        intent1.putExtra("msa", "not");
-                        intent1.putExtra("horizon", "HORIZON");
-                        intent1.putExtra("stem", "NO");
-                    }
-                    if (clubimages.getTag().equals("stem")) {
-                        intent1.putExtra("exp", "No");
-                        intent1.putExtra("msa", "not");
-                        intent1.putExtra("horizon", "NO");
-                        intent1.putExtra("stem", "STEM");
-                    }
-
-                    context.startActivity(intent1);
                 }
             });
-            FollowClubs.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent in = new Intent(context, NewsfeedActivity.class);
-                    if (FollowClubs.getText().toString().equalsIgnoreCase("FOLLOW MSA")) {
-                        in.putExtra("ReplyMsa", "MSA CLUB");
-                        in.putExtra("ReplyExpression", "NO");
-                        in.putExtra("ReplyHorizon", "NO");
-                        in.putExtra("ReplyStemwomen", "NO");
-                    }
-                    if (FollowClubs.getText().toString().equalsIgnoreCase("FOLLOW EXPRESSION")) {
-                        in.putExtra("ReplyExpression", "EXPRESSION CLUB");
-                        in.putExtra("ReplyMsa", "NO");
-                        in.putExtra("ReplyHorizon", "NO");
-                        in.putExtra("ReplyStemwomen", "NO");
-                    }
-                    if (FollowClubs.getText().toString().equalsIgnoreCase("FOLLOW HORIzON")) {
-                        in.putExtra("ReplyHorizon", "HORIZON CLUB");
-                        in.putExtra("ReplyExpression", "NO");
-                        in.putExtra("ReplyMsa", "NO");
-                        in.putExtra("ReplyStemwomen", "NO");
-                    }
-                    if (FollowClubs.getText().toString().equalsIgnoreCase("FOLLOW STEMWOMEN")) {
-                        in.putExtra("ReplyStemwomen", "STEMWOMEN CLUB");
-                        in.putExtra("ReplyMsa", "NO");
-                        in.putExtra("ReplyHorizon", "NO");
-                        in.putExtra("ReplyExpression", "NO");
-                    }
-                    context.startActivity(in);
-                }
-            });
-            this.context = context;
-
-            this.name = name;
         }
-
-
     }
 }

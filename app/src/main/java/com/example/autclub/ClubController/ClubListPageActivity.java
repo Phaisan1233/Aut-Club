@@ -1,64 +1,102 @@
 package com.example.autclub.ClubController;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.autclub.AppModel.App;
 import com.example.autclub.AppModel.Club;
+import com.example.autclub.AppModel.ThreadConnectDatabase;
+import com.example.autclub.AppModel.User;
+import com.example.autclub.AppModel.VolleyResponseListener;
 import com.example.autclub.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClubListPageActivity extends AppCompatActivity {
 
-    public static ArrayList<String> description;
-    private List<String> imagestag = new ArrayList<>();
-    private List<Club> imagename = new ArrayList<>();
-    private RecyclerView.LayoutManager layoutManager;
-    private ClubsListAdapter Clubadapter;
+    private static final String POST_PHP = "Post.php"; //php file
+    private ClubsListAdapter clubsListAdapter;
+    private User user;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clublist);
+        requestQueue = Volley.newRequestQueue(ClubListPageActivity.this);
+        setUpRecyclerView();
 
-        imagestag.add("horizon");
-        imagestag.add("expression");
-        imagestag.add("msa");
-        imagestag.add("stem");
+    }
 
-        imagename.add(new Club("Horizon", R.drawable.horizon));
-        imagename.add(new Club("Expression", R.drawable.expression));
-        imagename.add(new Club("MSA", R.drawable.msa));
-        imagename.add(new Club("StemWomen", R.drawable.stemwomen));
-
-        description = new ArrayList<>();
-
-        description.add("The Muslim Students Association(MSA) at Auckland University of Technology (AUT) is dedicated to helping our fellow brothers and sisters.");
-        description.add("Horizon. ADP is a club from AUT who focus on creating a sense of community wihtin the AUT student body. The club provides social events, casual dance classes and opportunities for students who want to further develop themselves both in dance and in their own lives. We believe every day should be Pink Shirt Day and love our craft!");
-        description.add("Expression is a fun way to express yourself through dance! All styles are welcome. Join in to have fun, learn a few moves and loosen up from your hectic uni life!");
-        description.add("This group is to support and encourage women in STEM and help them develop the skills they need to do effective networking and succeed in their field of study.");
-
+    private void setUpRecyclerView(){
+        Intent intent = getIntent();
+        user = new Gson().fromJson(intent.getStringExtra("user"), User.class);
+        clubsListAdapter = new ClubsListAdapter(user.getClubArrayList());
         RecyclerView recyclerView = findViewById(R.id.recycler);
-        layoutManager = new GridLayoutManager(ClubListPageActivity.this, 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(ClubListPageActivity.this,2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        Clubadapter = new ClubsListAdapter(ClubListPageActivity.this, imagename, imagestag);
-        recyclerView.setAdapter(Clubadapter);
+        recyclerView.setAdapter(clubsListAdapter);
+        clubsListAdapter.setOnItemClickListener(new ClubsListAdapter.OnItemClickListener() {
+            @Override
+            public void onFollowClick(int position, ArrayList<Club> clubList) {
+                user.setClubArrayList(clubList);
+                String sql;
+                if(clubList.get(position).getConnectID() == 0){
+                     sql = "INSERT INTO following (connectID, user_ID, club_ID, followStatus, joinStatus) " +
+                             "VALUES (NULL, "+user.getUserID()+", "+clubList.get(position).getClubID()+", 1, 0)";
+                }else{
+                    int n =0;
+                    if(clubList.get(position).isFollowStatus()){
+                        n=1;
+                    }
+                    sql = "UPDATE following SET followStatus = "+n+" WHERE connectID = "+clubList.get(position).getConnectID();
+                }
+                Map<String, String> params = new HashMap<>();
+                params.put("sql", sql);
 
+
+                ThreadConnectDatabase threadConnectDatabase = new ThreadConnectDatabase(requestQueue,params, POST_PHP, new VolleyResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                });
+                threadConnectDatabase.stopThread();
+                threadConnectDatabase.start();
+
+            }
+
+            @Override
+            public void onImageClick(int position,ArrayList<Club> clubList) {
+                user.setClubArrayList(clubList);
+                App.newActivityPage(ClubListPageActivity.this,ClubPageActiviy.class,user.toString(), String.valueOf(position));
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+
         MenuItem searchMenuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -67,21 +105,11 @@ public class ClubListPageActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                List<Club> clubs = new ArrayList<>();
-                clubs = LookForClubs(clubs, s.toLowerCase());
-                Clubadapter.SearchClubs(clubs);
+                clubsListAdapter.getFilter().filter(s);
                 return true;
             }
         });
         return true;
     }
 
-    public List<Club> LookForClubs(List<Club> n, String textinput) {
-        for (int i = 0; i < imagename.size(); i++) {
-            if (imagename.get(i).getName().toLowerCase().trim().contains(textinput)) {
-                n.add(imagename.get(i));
-            }
-        }
-        return n;
-    }
 }

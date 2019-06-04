@@ -339,9 +339,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     private void newActivityPage(Class nextClass) {
         Intent intent = new Intent(MainActivity.this, nextClass);
-        String json = gson.toJson(user);
-        intent.putExtra("user", json);
-        Log.d(TAG, "newActivityPage: "+json);
+        intent.putExtra("user", user.toString());
+        Log.d(TAG, "newActivityPage: "+user.toString());
         MainActivity.this.startActivity(intent);
     }
 

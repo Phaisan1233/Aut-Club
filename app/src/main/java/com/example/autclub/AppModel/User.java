@@ -1,5 +1,6 @@
 package com.example.autclub.AppModel;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class User {
     private String email;
 
     private double timeStamp;
+
+    @SerializedName("clubList")
     private ArrayList<Club> clubArrayList; //the list of club that user are following
 
     /**
@@ -178,21 +181,14 @@ public class User {
      *
      * @param clubArrayList the follow club
      */
-    @SerializedName("clubList")
     public void setClubArrayList(ArrayList<Club> clubArrayList) {
         this.clubArrayList = clubArrayList;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", timeStamp=" + timeStamp +
-                ", clubArrayList=" + clubArrayList +
-                '}';
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
 

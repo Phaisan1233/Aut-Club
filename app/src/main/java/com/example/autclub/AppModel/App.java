@@ -52,9 +52,19 @@ public class App extends Application {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public static void newActivityPage(Context context, Class nextClass, String value) {
+    public static Intent newActivityPage(Context context, Class nextClass, String value) {
         Intent intent = new Intent(context, nextClass);
         intent.putExtra("value", value);
         context.startActivity(intent);
+        return intent;
     }
+
+    public static Intent newActivityPage(Context context, Class nextClass, String value1 ,String value2) {
+        Intent intent = new Intent(context, nextClass);
+        intent.putExtra("value", value1);
+        intent.putExtra("value2",value2);
+        context.startActivity(intent);
+        return intent;
+    }
+
 }

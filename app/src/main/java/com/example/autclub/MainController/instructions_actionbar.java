@@ -13,7 +13,5 @@ public class instructions_actionbar extends AppCompatActivity {
         setContentView(R.layout.activity_instructions_actionbar);
 
 
-
-
     }
 }

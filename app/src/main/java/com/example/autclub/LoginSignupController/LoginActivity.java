@@ -8,12 +8,13 @@ import android.widget.EditText;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.autclub.AppModel.Club;
 import com.example.autclub.AppModel.App;
+import com.example.autclub.AppModel.Club;
 import com.example.autclub.AppModel.ThreadConnectDatabase;
 import com.example.autclub.AppModel.User;
 import com.example.autclub.AppModel.VolleyResponseListener;
 import com.example.autclub.InitialController.InstructionPage;
+import com.example.autclub.MainController.AdminActivity;
 import com.example.autclub.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private static final String loginPHP = "Login.php"; //php file
+    private static final String LOGIN_PHP = "Login.php"; //php file
 
     private RequestQueue requestQueue;// request info form database
 
@@ -49,14 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         //set view variable
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
         gson = new Gson();
-        if (! App.isConnected(LoginActivity.this)) {
+        if (!App.isConnected(LoginActivity.this)) {
             App.buildDialog(LoginActivity.this, "No Internet Connection", "Ok");
         }
 
     }
 
     public void eventHandleGuestButton(View view) {
-        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, new HashMap<String, String>(), loginPHP,new VolleyResponseListener() {
+        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, new HashMap<String, String>(), LOGIN_PHP, new VolleyResponseListener() {
             @Override
             public void onResponse(String response) {
                 eventHandleGuestButtonResponse(response);
@@ -67,11 +68,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void eventHandleResetPasswordButton(View view) {
-        App.newActivityPage(LoginActivity.this,ResetPasswordActivity.class, "");
+        App.newActivityPage(LoginActivity.this, ResetPasswordActivity.class, "");
     }
 
     public void eventHandleSignUpTextView(View view) {
-        App.newActivityPage(LoginActivity.this,SignUpActivity.class, "");
+        App.newActivityPage(LoginActivity.this, SignUpActivity.class, "");
     }
 
     public void eventHandleLoginButton(View view) {
@@ -80,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("password", passwordEditText.getText().toString());
         params.put("userID", "0");
 
-        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, params,loginPHP, new VolleyResponseListener() {
+        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, params, LOGIN_PHP, new VolleyResponseListener() {
             @Override
             public void onResponse(String response) {
                 eventHandleLoginButtonResponse(response);
@@ -97,7 +98,23 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(response);
             boolean success = jsonObject.getBoolean("success");
             if (success) {
-                App.newActivityPage(LoginActivity.this,InstructionPage.class, response);
+                switch (jsonObject.getString("userName")) {
+                    case "MSA_admin":
+                        App.newActivityPage(LoginActivity.this, AdminActivity.class, "1");
+                        return;
+                    case "Expression_admin":
+                        App.newActivityPage(LoginActivity.this, AdminActivity.class, "2");
+                        return;
+                    case "Horizon_admin":
+                        App.newActivityPage(LoginActivity.this, AdminActivity.class, "3");
+                        return;
+                    case "STEW_admin":
+                        App.newActivityPage(LoginActivity.this, AdminActivity.class, "4");
+                        return;
+                    default:
+                        App.newActivityPage(LoginActivity.this, InstructionPage.class, response);
+
+                }
             } else {
                 App.buildDialog(LoginActivity.this, "Login Failed", "Retry");
             }
@@ -116,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             }.getType();
             ArrayList<Club> clubList = gson.fromJson(jsonObject.getString("clubList"), type);
             User user = new User(0, "Guest User", "", "", "", timestamp.toString(), clubList);
-            App.newActivityPage(LoginActivity.this,InstructionPage.class, gson.toJson(user));
+            App.newActivityPage(LoginActivity.this, InstructionPage.class, gson.toJson(user));
         } catch (JSONException e) {
             e.printStackTrace();
         }

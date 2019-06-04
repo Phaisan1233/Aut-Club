@@ -5,7 +5,10 @@ import com.google.gson.annotations.SerializedName;
 /**
  * The Club class contain club information.
  */
-public class Club {
+public class Club{
+    @SerializedName("connectID")
+    private int connectID;
+
     @SerializedName("clubID")
     private int clubID;
 
@@ -54,6 +57,14 @@ public class Club {
         setClubID(clubID);
         setName(name);
         setTokens(tokens);
+    }
+
+    public int getConnectID() {
+        return connectID;
+    }
+
+    public void setConnectID(int connectID) {
+        this.connectID = connectID;
     }
 
     /**
@@ -140,16 +151,24 @@ public class Club {
         return followStatus;
     }
 
-    public void setFollowStatus(boolean followStatus) {
-        this.followStatus = followStatus;
+    public void setChangeFollowStatus() {
+        if(this.isFollowStatus()){
+            this.followStatus = false;
+        }else{
+            this.followStatus = true;
+        }
     }
 
     public boolean isJoinStatus() {
         return joinStatus;
     }
 
-    public void setJoinStatus(boolean joinStatus) {
-        this.joinStatus = joinStatus;
+    public void setChangeJoinStatus() {
+        if(this.isJoinStatus()){
+            this.joinStatus = false;
+        }else{
+            this.joinStatus = true;
+        }
     }
 
     @Override

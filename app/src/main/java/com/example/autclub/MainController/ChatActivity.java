@@ -32,7 +32,7 @@ import static com.example.autclub.AppModel.App.CHANNEL_1_ID;
 
 public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
-    private static final String chatPHP = "Chat.php"; //php file
+    private static final String CHAT_PHP = "Chat.php"; //php file
     private static final String insertMessagePHP = "InsertMessage.php";
 
     private EditText editText;
@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(ChatActivity.this);
 
-        thread = new ThreadConnectDatabase(requestQueue, new HashMap<String, String>(), chatPHP,new VolleyResponseListener() {
+        thread = new ThreadConnectDatabase(requestQueue, new HashMap<String, String>(), CHAT_PHP,new VolleyResponseListener() {
             @Override
             public void onResponse(String response) {
                 try {

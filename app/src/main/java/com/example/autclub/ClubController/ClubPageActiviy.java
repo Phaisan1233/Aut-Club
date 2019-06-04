@@ -3,69 +3,55 @@ package com.example.autclub.ClubController;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.autclub.MainController.ViewActivity;
+import com.example.autclub.AppModel.App;
+import com.example.autclub.AppModel.User;
+import com.example.autclub.MainController.JoinRequest;
 import com.example.autclub.R;
+import com.google.gson.Gson;
 
-import static com.example.autclub.ClubController.ClubListPageActivity.description;
 
 public class ClubPageActiviy extends AppCompatActivity {
+    private static final String TAG = "ClubPageActiviy";
+    private int position;
+    private User user;
+    private Button joinButton;
+    private TextView description;
+    private TextView clubname;
+    private ImageView imageView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clubpage);
-        Button Join = (Button) findViewById(R.id.Join);
-        TextView t = findViewById(R.id.Description);
-        TextView clubname = findViewById(R.id.clubname);
-        ImageView im = findViewById(R.id.exp_pic);
 
-        Intent in = getIntent();
-        String text = in.getStringExtra("msa");
-        String text2 = in.getStringExtra("exp");
-        String text3 = in.getStringExtra("horizon");
-        String text4 = in.getStringExtra("stem");
+        joinButton = findViewById(R.id.Join);
+        description = findViewById(R.id.Description);
+        clubname = findViewById(R.id.clubname);
+        imageView = findViewById(R.id.exp_pic);
 
-        if (text.equalsIgnoreCase("msa")) {
-            String name = "AUT MSA";
-            clubname.setText(name);
-            im.setImageResource(R.drawable.msa);
-            String msadescription = description.get(0);
-            t.setText(msadescription);
-        }
-        if (text2.equalsIgnoreCase("exp")) {
-            String name = "EXPRESSION";
-            clubname.setText(name);
-            im.setImageResource(R.drawable.expression);
-            String expressiondescription = description.get(2);
-            t.setText(expressiondescription);
-        }
-        if (text3.equalsIgnoreCase("horizon")) {
-            String name = "HORIZON";
-            clubname.setText(name);
-            im.setImageResource(R.drawable.horizon);
-            String Horizondescription = description.get(1);
-            t.setText(Horizondescription);
-        }
-        if (text4.equalsIgnoreCase("stem")) {
-            String name = "STEM WOMEN";
-            clubname.setText(name);
-            im.setImageResource(R.drawable.stemwomen);
-            String stemdescription = description.get(3);
-            t.setText(stemdescription);
-        }
+        setDisplay();
+    }
 
-        Join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ClubPageActiviy.this, ViewActivity.class);
-                startActivity(intent);
-            }
-        });
-
+    public void setDisplay() {
+        Intent intent = getIntent();
+        intent.getStringExtra("value");
+        intent.getStringExtra("value2");
+        user = new Gson().fromJson(intent.getStringExtra("value"), User.class);
+        position = Integer.parseInt(intent.getStringExtra("value2"));
+        clubname.setText(user.getClubArrayList().get(position).getName());
+        imageView.setImageResource(user.getClubArrayList().get(position).getImage());
+        description.setText(user.getClubArrayList().get(position).getDescription());
+        Log.d(TAG, "setDisplay: "+position);
+    }
+    
+    public void eventHandleJoinButton(View v){
+        App.newActivityPage(ClubPageActiviy.this, JoinRequest.class, user.toString(), String.valueOf(position));
     }
 }
 

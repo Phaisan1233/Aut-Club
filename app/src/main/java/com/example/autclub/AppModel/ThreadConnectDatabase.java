@@ -26,11 +26,11 @@ public class ThreadConnectDatabase extends Thread {
     private RequestQueue requestQueue;// request info form database
     private int sleepTime;
 
-    public ThreadConnectDatabase(RequestQueue requestQueue, Map<String, String> parameter, String phpFile, VolleyResponseListener callback1) {
+    public ThreadConnectDatabase(RequestQueue requestQueue, Map<String, String> parameter, String phpFile, VolleyResponseListener callback) {
         this.requestQueue = requestQueue;
         this.parameter = parameter;
         this.phpFile = phpFile;
-        this.callback = callback1;
+        this.callback = callback;
         this.sleepTime = 0;
     }
 
@@ -77,7 +77,6 @@ public class ThreadConnectDatabase extends Thread {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "onResponse: " + response);
                 callback.onResponse(response);
             }
         };

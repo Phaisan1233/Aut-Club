@@ -2,6 +2,7 @@ package com.example.autclub.LoginSignupController;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -75,6 +76,8 @@ public class SignUpActivity extends AppCompatActivity {
                     eventHandleSignUpButtonResponse(response);
                 }
             });
+            thread.stopThread();
+            thread.start();
         }
     }
 
