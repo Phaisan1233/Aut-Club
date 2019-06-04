@@ -83,18 +83,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         calenderTextView = findViewById(R.id.main_editText);
         calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         clubButton = findViewById(R.id.main_clubButton);
-       // reportButton = findViewById(R.id.buttonreport);
-       // homeButton = findViewById(R.id.homeButton);
-       // logoutButton = findViewById(R.id.main_btnLogOut);
 
         mQueue = Volley.newRequestQueue(this);
-//        logoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
 
         generalEvent();
         MSAjsonParse();
@@ -103,30 +94,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        //actionBar.setTitle("hello worlf");
+
         compactCalendarView.setUseThreeLetterAbbreviation(true);
-//
-//        homeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                newActivityPage(NewsfeedActivity.class);
-//            }
-//        });
 
-//        reportButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                eventHandleReportButton();
-//            }
-//
-//        });
-
-//        logoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                eventHandleLogoutButton();
-//            }
-//        });
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -145,7 +115,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 App.newActivityPage(MainActivity.this,NewsfeedActivity.class,value);
                 return true;
             case R.id.report:
-                App.newActivityPage(MainActivity.this,Report.class,value);
+                Intent in = new Intent(Intent.ACTION_SEND);
+                in.putExtra(Intent.EXTRA_EMAIL,new String[]{"autclubs@outlook.com"});
+                in.putExtra(Intent.EXTRA_SUBJECT,"Admin Report");
+                in.setType("text/plain");
+                startActivity(in);
+
                 return true;
             case R.id.logout:
                 App.newActivityPage(MainActivity.this,LoginActivity.class,value);
@@ -162,13 +137,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             flipperImages(images[i]);
     }
 
-//    private void eventHandleLogoutButton() {
-//        newActivityPage(LoginActivity.class);
-//    }
-
-//    private void eventHandleReportButton() {
-//        newActivityPage(Report.class);
-//    }
 
     private void generalEvent() {
         String url = "https://graph.facebook.com/v3.3/me/events?access_token=EAAGLQONEKZC8BAPQ8SFrDS2bUZAediZC0yfd3M98oqKAlEYdm6iHldZBo13pNgrhpzfHab6rHYjBjYxduBSxvSO4fZBvJnYUiokjDcoDLXhBnxpCRzal6l9qQjCAnJHc2p2fwmrxKbLhqt64lVK1rpwdgy3uZBy2aVdR4JfYJxegZDZD";
