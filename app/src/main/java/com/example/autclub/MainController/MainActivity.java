@@ -46,7 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity  {
 
     private static final String TAG = "MainActivity";
     static ArrayList<Event> event = new ArrayList<>();
@@ -83,9 +83,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         calenderTextView = findViewById(R.id.main_editText);
         calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         clubButton = findViewById(R.id.main_clubButton);
+       // reportButton = findViewById(R.id.buttonreport);
+       // homeButton = findViewById(R.id.homeButton);
+       // logoutButton = findViewById(R.id.main_btnLogOut);
 
         mQueue = Volley.newRequestQueue(this);
-
+//        logoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         generalEvent();
         MSAjsonParse();
@@ -94,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-
+        //actionBar.setTitle("hello worlf");
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
     }
@@ -111,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.notification:
                 App.newActivityPage(MainActivity.this,NotificationActivity.class,value);
                 return true;
-            case R.id.achomeButton:
-                App.newActivityPage(MainActivity.this,NewsfeedActivity.class,value);
+            case R.id.about_us:
+                App.newActivityPage(MainActivity.this,AboutUs.class,value);
                 return true;
             case R.id.report:
                 Intent in = new Intent(Intent.ACTION_SEND);
@@ -120,7 +129,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 in.putExtra(Intent.EXTRA_SUBJECT,"Admin Report");
                 in.setType("text/plain");
                 startActivity(in);
+                return true;
 
+            case R.id.instruction:
+                App.newActivityPage(MainActivity.this,AboutUs.class,value);
                 return true;
             case R.id.logout:
                 App.newActivityPage(MainActivity.this,LoginActivity.class,value);
@@ -308,29 +320,29 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
-
-
-    private void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.settings);
-        popup.show();
-
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item1:
-                toastMessage("Item1clicked");
-                return true;
-            case R.id.item2:
-                toastMessage("item clicked");
-                return true;
-            default:
-                return false;
-        }
-    }
+//
+//
+//    private void showPopup(View v) {
+//        PopupMenu popup = new PopupMenu(this, v);
+//        popup.setOnMenuItemClickListener(this);
+//        popup.inflate(R.menu.settings);
+//        popup.show();
+//
+//    }
+//
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.item1:
+//                toastMessage("Item1clicked");
+//                return true;
+//            case R.id.item2:
+//                toastMessage("item clicked");
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     private void toastMessage(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();

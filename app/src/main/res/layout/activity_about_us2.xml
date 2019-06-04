@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+
+android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="354dp"
+        android:layout_height="109dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="275dp"
+        android:layout_marginRight="30dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="117dp"
+            android:layout_height="89dp"
+            app:srcCompat="@drawable/phaisan" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="193dp"
+            android:layout_height="82dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:text="Hello! I am Phaisan.Third year software student at AUT.Contact me on wxv1734@autuni.ac.nz " />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="118dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginRight="30dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="115dp"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/ankita" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="193dp"
+            android:layout_height="96dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:text="Hello! I am Ankita Panwar.Third year software student at AUT.Contact me on jw378886@gmail.com" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="352dp"
+        android:layout_height="118dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="380dp"
+        android:layout_marginRight="30dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="115dp"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/iqra" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:text="Hello! I am Iqra Banu.Third year software student at AUT.Contact me on iqrabanu.12666@gmail.com" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="129dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="188dp"
+            android:layout_height="105dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Hello! I am Lianne Ann Chacko.Third year software student at AUT.Contact me on liannesavio@gmail.com " />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="128dp"
+            android:layout_height="102dp"
+            app:srcCompat="@drawable/lianne" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="352dp"
+        android:layout_height="107dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginRight="30dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="115dp"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/hareem" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="183dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Hello! I am Hareem.Third year software student at AUT.Contact me on hareemkhan@hotmail.co.nz "  />
+    </RelativeLayout>
+
+
+</RelativeLayout>

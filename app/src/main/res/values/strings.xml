@@ -19,6 +19,10 @@
     <string name="reset_password">Reset Password</string>
     <string name="nice">Nice</string>
     <string name="change_password">Change password</string>
+    <string name="about_us">About Us</string>
+    <string name="instruction">Instruction</string>
+    <string name="hi_there_thank_you_for_using_our_app_to_join_and_connect_with_all_the_clubs_at_aut_that_you_wish_to_be_part_of">Hi there,thank you for using our app to join and connect with all the clubs at AUT that you wish to be part of.</string>
+    <string name="click_here">click to know more about us</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
