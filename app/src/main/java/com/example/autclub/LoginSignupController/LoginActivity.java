@@ -32,7 +32,6 @@ import java.util.Map;
  */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private static final String databaseURL = "https://softwareteamproject.000webhostapp.com/"; //datebase link
     private static final String loginPHP = "Login.php"; //php file
 
     private RequestQueue requestQueue;// request info form database
@@ -40,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Gson gson;
-    private ThreadConnectDatabase thread;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void eventHandleGuestButton(View view) {
-        Map<String, String> params = new HashMap<>();
-        params.put("DB_HOST", "localhost");
-        params.put("DB_USER", "id9336220_autclubdb");
-        params.put("DB_PASSWORD", "software");
-        params.put("DB_NAME", "id9336220_autclubdb");
-
-        thread = new ThreadConnectDatabase(requestQueue, params, loginPHP,new VolleyResponseListener() {
+        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, new HashMap<String, String>(), loginPHP,new VolleyResponseListener() {
             @Override
             public void onResponse(String response) {
                 eventHandleGuestButtonResponse(response);
@@ -85,15 +76,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void eventHandleLoginButton(View view) {
         Map<String, String> params = new HashMap<>();
-        params.put("DB_HOST", "localhost");
-        params.put("DB_USER", "id9336220_autclubdb");
-        params.put("DB_PASSWORD", "software");
-        params.put("DB_NAME", "id9336220_autclubdb");
         params.put("username", usernameEditText.getText().toString());
         params.put("password", passwordEditText.getText().toString());
         params.put("userID", "0");
 
-        thread = new ThreadConnectDatabase(requestQueue, params,loginPHP, new VolleyResponseListener() {
+        ThreadConnectDatabase thread = new ThreadConnectDatabase(requestQueue, params,loginPHP, new VolleyResponseListener() {
             @Override
             public void onResponse(String response) {
                 eventHandleLoginButtonResponse(response);

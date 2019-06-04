@@ -1,8 +1,5 @@
 package com.example.autclub.AppModel;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -10,7 +7,7 @@ import java.util.ArrayList;
 /**
  * The User contain user information.
  */
-public class User  {
+public class User {
     private int userID;
     private String userName;
     private String firstName;
@@ -26,16 +23,6 @@ public class User  {
     public User() {
     }
 
-    public User(int userID, String firstName, String timeStamp,ArrayList clubArrayList) {
-        setUserID(userID);
-        setUserName(null);
-        setFirstName(firstName);
-        setLastName(null);
-        setEmail(null);
-        setTimeStamp(timeStamp);
-        setClubArrayList(clubArrayList);
-    }
-
     /**
      * The constructor to create a new User.
      *
@@ -44,7 +31,7 @@ public class User  {
      * @param lastName  the last name
      * @param email     the email
      */
-    public User(int userID,String userName, String firstName, String lastName, String email, String timeStamp ) {
+    public User(int userID, String userName, String firstName, String lastName, String email, String timeStamp) {
         setUserID(userID);
         setUserName(userName);
         setFirstName(firstName);
@@ -62,7 +49,7 @@ public class User  {
      * @param email     the email
      * @param timeStamp the time
      */
-    public User(int userID,String userName, String firstName, String lastName, String email, String timeStamp , ArrayList clubArrayList) {
+    public User(int userID, String userName, String firstName, String lastName, String email, String timeStamp, ArrayList<Club> clubArrayList) {
         setUserID(userID);
         setUserName(userName);
         setFirstName(firstName);
@@ -72,14 +59,6 @@ public class User  {
         setClubArrayList(clubArrayList);
     }
 
-
-    public User(String username, String firstName, String lastName, String email,String timeStamp) {
-        setUserName(username);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setTimeStamp(timeStamp);
-    }
 
     public int getUserID() {
         return userID;
@@ -182,7 +161,7 @@ public class User  {
      */
     @SerializedName("time")
     public void setTimeStamp(String timeStamp) {
-        this.timeStamp = Double.parseDouble(timeStamp.replaceAll("[^0-9]+", "").substring(0,14));
+        this.timeStamp = Double.parseDouble(timeStamp.replaceAll("[^0-9]+", "").substring(0, 14));
     }
 
     /**

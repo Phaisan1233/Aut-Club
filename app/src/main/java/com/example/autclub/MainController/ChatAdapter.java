@@ -16,18 +16,14 @@ import com.example.autclub.R;
 import java.util.ArrayList;
 
 public class ChatAdapter extends BaseAdapter {
-    ArrayList<Message> messages = new ArrayList<>();
-    Context context;
+    private ArrayList<Message> messages = new ArrayList<>();
+    private Context context;
 
-    public View avatar;
-    public TextView name;
-    public TextView messageBody;
-
-    public ChatAdapter(Context context) {
+    ChatAdapter(Context context) {
         this.context = context;
     }
 
-    public void add (Message message){
+    void add(Message message) {
         this.messages.add(message);
         notifyDataSetChanged();
     }
@@ -52,17 +48,16 @@ public class ChatAdapter extends BaseAdapter {
         LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         Message message = messages.get(position);
 
+        TextView messageBody;
         if (message.isBelongsToCurrentUser()) {
-            convertView = messageInflater.inflate(R.layout.my_message, null);
-            messageBody = (TextView) convertView.findViewById(R.id.message_body);
-            //convertView.setTag(holder);
+            convertView = messageInflater.inflate(R.layout.my_message, parent,false);
+            messageBody = convertView.findViewById(R.id.message_body);
             messageBody.setText(message.getMessage());
         } else {
-            convertView = messageInflater.inflate(R.layout.their_message, null);
-            avatar = (View) convertView.findViewById(R.id.avatar);
-            name = (TextView) convertView.findViewById(R.id.name);
-            messageBody = (TextView) convertView.findViewById(R.id.message_body);
-            //convertView.setTag(holder);
+            convertView = messageInflater.inflate(R.layout.their_message, parent,false);
+            View avatar = convertView.findViewById(R.id.avatar);
+            TextView name = convertView.findViewById(R.id.name);
+            messageBody =  convertView.findViewById(R.id.message_body);
 
             name.setText(message.getName());
             messageBody.setText(message.getMessage());

@@ -7,4 +7,17 @@
         android:icon="@drawable/ic_notification_bell"
         android:title="Notification"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/item1"
+        android:title="Item1" />
+
+    <item
+        android:id="@+id/item2"
+        android:title="Item2" />
+
+    <item
+        android:id="@+id/item3"
+        android:title="Item3" />
+
+
 </menu>

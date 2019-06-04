@@ -1,9 +1,5 @@
 package com.example.autclub.AppModel;
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -58,17 +54,6 @@ public class Club {
         setClubID(clubID);
         setName(name);
         setTokens(tokens);
-    }
-
-
-    protected Club(Parcel in) {
-        clubID = in.readInt();
-        name = in.readString();
-        image = in.readInt();
-        description = in.readString();
-        tokens = in.readString();
-        followStatus = in.readByte() != 0;
-        joinStatus = in.readByte() != 0;
     }
 
     /**
@@ -169,7 +154,7 @@ public class Club {
 
     @Override
     public String toString() {
-        return "Club{"+ clubID + ", " + name + ",\n " + description +"\n " + tokens + "\n" +
+        return "Club{" + clubID + ", " + name + ",\n " + description + "\n " + tokens + "\n" +
                 ", followStatus=" + followStatus +
                 ", joinStatus=" + joinStatus +
                 "}\n";

@@ -69,7 +69,7 @@ public class InstructionPage extends AppIntro {
     public void startNewPage() {
         Intent intent = new Intent(InstructionPage.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("user", value);
+        intent.putExtra("value", value);
         InstructionPage.this.startActivity(intent);
     }
 

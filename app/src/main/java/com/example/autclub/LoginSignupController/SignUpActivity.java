@@ -58,10 +58,6 @@ public class SignUpActivity extends AppCompatActivity {
      */
     public void eventHandleSignUpButton(View view) {
         Map<String, String> params = new HashMap<>();
-        params.put("DB_HOST", "localhost");
-        params.put("DB_USER", "id9336220_autclubdb");
-        params.put("DB_PASSWORD", "software");
-        params.put("DB_NAME", "id9336220_autclubdb");
         params.put("username", usernameEditText.getText().toString());
         params.put("password", passwordEditText.getText().toString());
         params.put("firstName", firstNameEditText.getText().toString());

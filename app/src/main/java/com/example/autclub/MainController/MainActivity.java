@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.autclub.AppModel.App;
 import com.example.autclub.AppModel.Event;
 import com.example.autclub.AppModel.User;
 import com.example.autclub.ClubController.ClubListPageActivity;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private RequestQueue mQueue;
     private User user = new User();
     private Gson gson;
+    private String value;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         setContentView(R.layout.activity_main);
         gson = new Gson();
         Intent intent = getIntent();
-        user = gson.fromJson(intent.getStringExtra("user"),User.class);
-        Log.d(TAG, "onCreate: "+intent.getStringExtra("user"));
+        value = intent.getStringExtra("value");
+
+        user = gson.fromJson(intent.getStringExtra("value"),User.class);
+        Log.d(TAG, "onCreate: "+intent.getStringExtra("value"));
 
 
         compactCalendarView = findViewById(R.id.compactcalendar_view);
@@ -131,12 +136,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         inflater.inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.notification:
-                Intent i = new Intent(MainActivity.this, NotificationActivity.class);
-                this.startActivity(i);
+                App.newActivityPage(MainActivity.this,NotificationActivity.class,value);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

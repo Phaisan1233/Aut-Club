@@ -2,6 +2,7 @@ package com.example.autclub.AppModel;
 
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -9,6 +10,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+
+import com.example.autclub.R;
 
 public class App extends Application {
     public static final String CHANNEL_1_ID = "channel1";
@@ -33,18 +38,21 @@ public class App extends Application {
             manager.createNotificationChannel(channel1);
         }
     }
+
     public static void buildDialog(Context context, String message, String buttonTxt) {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
         alertdialog.setMessage(message);
         alertdialog.setPositiveButton(buttonTxt, null);//when ok button is pressed then the error message will go away
         alertdialog.show();
     }
+
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netinfo = cm.getActiveNetworkInfo();
-        return (netinfo != null && netinfo.isConnected());
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
-    public static void newActivityPage(Context context ,Class nextClass, String value) {
+
+    public static void newActivityPage(Context context, Class nextClass, String value) {
         Intent intent = new Intent(context, nextClass);
         intent.putExtra("value", value);
         context.startActivity(intent);
