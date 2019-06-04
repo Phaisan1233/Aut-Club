@@ -38,7 +38,7 @@
         android:background="@drawable/button_background"
         android:fontFamily="monospace"
         android:text="@string/next"
-        android:textColor="#FFFFFF"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

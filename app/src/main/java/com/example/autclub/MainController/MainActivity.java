@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private Button clubButton, reportButton, logoutButton;
     private ViewFlipper viewFlipper;
     private CompactCalendarView compactCalendarView;
-    private ImageButton homeButton;
+   // private ImageButton homeButton;
     private MenuItem notificationBell;
     private RequestQueue mQueue;
     private User user = new User();
@@ -77,17 +77,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         gson = new Gson();
         Intent intent = getIntent();
         value = intent.getStringExtra("value");
-
         user = gson.fromJson(intent.getStringExtra("value"),User.class);
         Log.d(TAG, "onCreate: "+intent.getStringExtra("value"));
-
-
         compactCalendarView = findViewById(R.id.compactcalendar_view);
         calenderTextView = findViewById(R.id.main_editText);
         calenderTextView.setText(simpleDateFormat.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         clubButton = findViewById(R.id.main_clubButton);
         reportButton = findViewById(R.id.buttonreport);
-        homeButton = findViewById(R.id.homeButton);
+       // homeButton = findViewById(R.id.homeButton);
         logoutButton = findViewById(R.id.main_btnLogOut);
 
         mQueue = Volley.newRequestQueue(this);
@@ -108,13 +105,13 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         actionBar.setDisplayHomeAsUpEnabled(false);
         //actionBar.setTitle("hello worlf");
         compactCalendarView.setUseThreeLetterAbbreviation(true);
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newActivityPage(NewsfeedActivity.class);
-            }
-        });
+//
+//        homeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                newActivityPage(NewsfeedActivity.class);
+//            }
+//        });
 
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +134,22 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.notification:
                 App.newActivityPage(MainActivity.this,NotificationActivity.class,value);
                 return true;
+            case R.id.achomeButton:
+                App.newActivityPage(MainActivity.this,NewsfeedActivity.class,value);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     private void viewFlip() {
         int images[] = {R.drawable.horizon, R.drawable.expression, R.drawable.horizon1, R.drawable.horizon2};
