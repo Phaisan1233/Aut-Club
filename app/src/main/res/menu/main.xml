@@ -8,6 +8,14 @@
 
         android:title="Notification"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/achomeButton"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+
+
+        app:showAsAction="always" />
     <item android:id ="@+id/report"
         android:title= "report" />
     <item android:id ="@+id/about_us"
