@@ -14,18 +14,32 @@
         android:title="Home"
 
         app:showAsAction="always" />
-<!--
-    <item
-        android:id="@+id/item1"
-        android:title="Item1" />
 
     <item
-        android:id="@+id/item2"
-        android:title="Item2" />
+        android:id="@+id/report"
 
+        android:title="report"
+
+         />
     <item
-        android:id="@+id/item3"
-        android:title="Item3" />
-   -->
+        android:id="@+id/logout"
+
+        android:title="logout"
+
+        />
+
+
+        <!--<item-->
+            <!--android:id="@+id/item1"-->
+            <!--android:title="Item1" />-->
+
+        <!--<item-->
+            <!--android:id="@+id/item2"-->
+            <!--android:title="Item2" />-->
+
+        <!--<item-->
+            <!--android:id="@+id/item3"-->
+            <!--android:title="Item3" />-->
+
 
 </menu>
